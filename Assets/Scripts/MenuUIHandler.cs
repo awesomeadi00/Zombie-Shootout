@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Text.RegularExpressions;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,46 +13,50 @@ using UnityEditor;
 public class MenuUIHandler : MonoBehaviour
 {
     //These are variables for the buttons: 
-    public Button startButton;
-    public Button instructionsButton;
-    public Button settingsButton;
-    public Button exitButton;
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button instructionsButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button exitButton;
 
     //Boss variables: 
-    public Button bossButton;
-    public TextMeshProUGUI bossButtonText;
-    private bool isBoss = true;
+    [SerializeField] private Button bossButton;
+    [SerializeField] private TextMeshProUGUI bossButtonText;
 
     //These are variables for the screens on the canvas
-    public GameObject titleScreen;
-    public GameObject instructionsScreen;
-    public GameObject settingsScreen;
+    [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject instructionsScreen;
+    [SerializeField] private GameObject settingsScreen;
 
     private AudioSource menuAudio;
-    public AudioClip buttonClick;
-    public Slider volSlider;
+    [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private Slider volSlider;
+    [SerializeField] private Slider roundSlider;
+    [SerializeField] private TextMeshProUGUI roundText;
 
     //Variable to check which screen the user is on, 0 = title screen, 1 = instruction screen, 2 = settings screen
     private int gameScreen;
 
-
     void Start() {
         gameScreen = 0;
+        MainManager.Instance.bossActive = true;
+        MainManager.Instance.roundNumber = 1;
         menuAudio = GetComponent<AudioSource>();
     }
 
     void Update() {
         //If it's not the boss mode: 
-        if(!isBoss) {
+        if(!MainManager.Instance.bossActive) {
             bossButton.GetComponent<Image>().color = Color.red;
             bossButtonText.text = "De-activated";
         }
 
         //Else if it is the boss mode: 
-        else if(isBoss) {
+        else if(MainManager.Instance.bossActive) {
             bossButton.GetComponent<Image>().color = Color.green;
             bossButtonText.text = "Activated";
         }
+
+        MainManager.Instance.volumeValue = volSlider.value;
     }
 
     //This function will be called to start the Main Scene
@@ -104,10 +109,14 @@ public class MenuUIHandler : MonoBehaviour
 
     //A simple function which switches the toggle of boss mode and not boss mode (which should update through the Update() function).
     public void BossButtonControl() {
-        isBoss = !isBoss;
+        MainManager.Instance.bossActive = !MainManager.Instance.bossActive;
     }
 
-
+    //This function takes in the round number as an input and parses it to an integer (removes any unicode characters)
+    public void SetRoundNumber() {
+        MainManager.Instance.roundNumber = roundSlider.value;
+        roundText.text = roundSlider.value.ToString();
+    }
 
 
 
