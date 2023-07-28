@@ -1839,7 +1839,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Controls: \n\n- WASD: Movement\n\n- Left Shift: Sprint (Only if your stamina
     bar is up)\n\n- Spacebar: Jump\n\n- Left Click: Shoot\n\n- Right Click: Knife
-    Attack\n\n- 'R': Reload your weapon\n\n\n\n"
+    Attack\n\n- 'R': Reload your weapon\n\n- 'C': Collect weapons/ammo\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 570821af6fea44af1be9861c4a496950, type: 2}
   m_sharedMaterial: {fileID: 21855137469139786, guid: 570821af6fea44af1be9861c4a496950, type: 2}
@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -27.7
+  m_lineSpacing: -40.52
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
