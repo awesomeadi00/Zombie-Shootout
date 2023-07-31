@@ -117,7 +117,4 @@ public class MenuUIHandler : MonoBehaviour
         MainManager.Instance.roundNumber = roundSlider.value;
         roundText.text = roundSlider.value.ToString();
     }
-
-
-
 }

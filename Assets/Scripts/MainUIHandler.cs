@@ -9,8 +9,13 @@ public class MainUIHandler : MonoBehaviour
 {
     [SerializeField] private Button menuButton; 
     [SerializeField] private GameObject pausedScreen;
-    private bool paused = false;
-    public bool gameIsActive = false;   
+    private AudioSource gameAudio;
+    private bool paused = false;  
+
+    void Start() {
+        gameAudio = GetComponent<AudioSource>();
+        SetGameSettings();
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,8 +52,14 @@ public class MainUIHandler : MonoBehaviour
 
     //In this function, when we press the restart button, it will reload the Scene which is Prototype 5, meaning it will restart the script.
     public void ReturnToMenu() {
-        gameIsActive = false;
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    //This function will be called when the scene loads to start the 
+    public void SetGameSettings() {
+        // gameAudio.volume = MainManager.Instance.volumeValue * 0.25f;
+        //bossActive variable
+        //Round number variable
     }
 }
