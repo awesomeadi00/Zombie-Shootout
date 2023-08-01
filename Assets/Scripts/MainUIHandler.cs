@@ -9,19 +9,25 @@ public class MainUIHandler : MonoBehaviour
 {
     [SerializeField] private Button menuButton; 
     [SerializeField] private GameObject pausedScreen;
+    [SerializeField] private GameObject gameOverScreen;
+    private PlayerStats playerStats;
     private AudioSource gameAudio;
     private bool paused = false;  
 
     void Start() {
         gameAudio = GetComponent<AudioSource>();
+        playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         SetGameSettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P)) {
+        if(Input.GetKeyDown(KeyCode.P) && !playerStats.DeathStatus()) {
             PauseGame();
+        }
+
+        if(playerStats.DeathStatus()) {
+            ViewGameOverScreen();
         }
     }
 
@@ -54,6 +60,17 @@ public class MainUIHandler : MonoBehaviour
     public void ReturnToMenu() {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    //This function will simply reload the entire previous Active Scene from the beginning. 
+    public void RestartGame() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ViewGameOverScreen() {
+        gameOverScreen.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     //This function will be called when the scene loads to start the 

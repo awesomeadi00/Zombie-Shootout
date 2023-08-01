@@ -33,6 +33,7 @@ public class PlayerStats : CharacterStats
     public void NotRunningStaminaGain() {
         currentStamina += 10 * Time.deltaTime;          
         if(currentStamina > maxBarValue - barMargin) {
+            currentStamina = maxBarValue;
             outOfStamina = false;
         }
     }
@@ -54,4 +55,16 @@ public class PlayerStats : CharacterStats
         healthBar.value = health;
     }
 
-}
+    //A simple getter for the isDead bool. 
+    public bool DeathStatus() {
+        return isDead;
+    }
+
+        //Overriden zombie initialized variables. 
+    public override void InitializeVariables()
+    {
+        maxHealth = 5;
+        SetHealth(maxHealth);
+        isDead = false;
+    }
+ }

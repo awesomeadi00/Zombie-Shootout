@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerWalkSpeed = 5;
     [SerializeField] private float playerRunSpeed = 8;
     [SerializeField] private float jumpForce = 300;
+    private Vector3 deathPosition;
 
     private bool isRunning = false;
     private bool isMoving = false;
     private bool isOnGround = true;
+    public bool gameOver = false;
 
     private Rigidbody playerRb;
     private Animator playerAnim;
@@ -31,12 +33,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        GetPlayerInput();
+        if(playerStats.DeathStatus() == false) {
+            GetPlayerInput();
+        }
     }
 
     //This is to ensure that the physics applied on the user aren't jittery
     private void FixedUpdate() {
-        MovePlayer();
+        if(playerStats.DeathStatus() == false) {
+            MovePlayer();
+        }
+
+        else {
+            deathPosition = transform.position;
+            PlayerDeath();
+        }
     }
 
     //Monitors the playey's input
@@ -97,12 +108,30 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetTrigger("Jump_trig");
     }
 
+    //If the player dies, then they won't be able to move and 
+    private void PlayerDeath() {
+        playerAnim.SetBool("Death_b", true);
+        playerAnim.SetInteger("DeathType_int", 1);
+        transform.position = deathPosition;
+
+        //Destroy every zombie on the map if it is game over. 
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+        foreach(GameObject zombie in zombies) {
+            Destroy(zombie);
+        } 
+    }
+
     //This simply checks all the collision objects that the player can collide with
     private void OnCollisionEnter(Collision other) {
         //If the other object is the ground, then it will check if the player is still on it. 
         if(other.gameObject.CompareTag("Ground")) {
             isOnGround = true;
         }
+    }
+
+    IEnumerator DeathAnimation() {
+        yield return new WaitForSeconds(5);
+        //Animation;
     }
 }
 
