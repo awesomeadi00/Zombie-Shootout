@@ -59,12 +59,4 @@ public class PlayerStats : CharacterStats
     public bool DeathStatus() {
         return isDead;
     }
-
-        //Overriden zombie initialized variables. 
-    public override void InitializeVariables()
-    {
-        maxHealth = 5;
-        SetHealth(maxHealth);
-        isDead = false;
-    }
  }

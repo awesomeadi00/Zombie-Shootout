@@ -113,12 +113,6 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetBool("Death_b", true);
         playerAnim.SetInteger("DeathType_int", 1);
         transform.position = deathPosition;
-
-        //Destroy every zombie on the map if it is game over. 
-        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-        foreach(GameObject zombie in zombies) {
-            Destroy(zombie);
-        } 
     }
 
     //This simply checks all the collision objects that the player can collide with

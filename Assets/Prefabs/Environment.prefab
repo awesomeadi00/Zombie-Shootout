@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4094345628552904814}
   m_Layer: 0
   m_Name: Terrain 9
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4094345628589538218}
   m_Layer: 0
   m_Name: Terrain 8
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 4094345628698512577}
   m_Layer: 0
   m_Name: Terrain 5
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 4094345628699903083}
   m_Layer: 0
   m_Name: Terrain 3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 4094345628787292577}
   m_Layer: 0
   m_Name: Terrain 7
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 4094345629253912193}
   m_Layer: 0
   m_Name: Terrain 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 4094345629654776269}
   m_Layer: 0
   m_Name: Terrain 6
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 4094345630065237576}
   m_Layer: 0
   m_Name: Terrain 4
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 4094345630354636972}
   m_Layer: 0
   m_Name: Terrain 2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
