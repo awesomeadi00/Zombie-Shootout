@@ -30,8 +30,6 @@ public class MenuUIHandler : MonoBehaviour
     private AudioSource menuAudio;
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private Slider volSlider;
-    [SerializeField] private Slider roundSlider;
-    [SerializeField] private TextMeshProUGUI roundText;
 
     //Variable to check which screen the user is on, 0 = title screen, 1 = instruction screen, 2 = settings screen
     private int gameScreen;
@@ -39,7 +37,6 @@ public class MenuUIHandler : MonoBehaviour
     void Start() {
         gameScreen = 0;
         MainManager.Instance.bossActive = true;
-        MainManager.Instance.roundNumber = 1;
         menuAudio = GetComponent<AudioSource>();
     }
 
@@ -110,11 +107,5 @@ public class MenuUIHandler : MonoBehaviour
     //A simple function which switches the toggle of boss mode and not boss mode (which should update through the Update() function).
     public void BossButtonControl() {
         MainManager.Instance.bossActive = !MainManager.Instance.bossActive;
-    }
-
-    //This function takes in the round number as an input and parses it to an integer (removes any unicode characters)
-    public void SetRoundNumber() {
-        MainManager.Instance.roundNumber = roundSlider.value;
-        roundText.text = roundSlider.value.ToString();
     }
 }

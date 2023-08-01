@@ -10,33 +10,22 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float playerWalkSpeed = 5;
     [SerializeField] private float playerRunSpeed = 8;
+    [SerializeField] private float jumpForce = 300;
+
     private bool isRunning = false;
     private bool isMoving = false;
-
     private bool isOnGround = true;
+
     private Rigidbody playerRb;
-    [SerializeField] private float jumpForce = 300;
     private Animator playerAnim;
-
-    [SerializeField] private Slider healthBar;
-    [SerializeField] private Slider staminaBar;
-    private float maxBarValue = 100;
-    private float currentStamina;
-    private float staminaMargin = 0.1f;
-    private bool outOfStamina = false;
-
+    private PlayerStats playerStats;
 
     //Start is called before the first frame update
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
-        
-        currentStamina = maxBarValue;
-        staminaBar.value = maxBarValue; 
-        staminaBar.maxValue = maxBarValue;
-        
-        healthBar.maxValue = maxBarValue;
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -76,47 +65,36 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetBool("Static_b", true);
 
         //If the player is running, it will play the running animations and move at running speed. 
-        if(isRunning && isMoving && !outOfStamina) {
-            playerAnim.SetFloat("Speed_f", 0.6f);
+        if(isRunning && isMoving && !playerStats.outOfStamina) {
             transform.Translate(Vector3.forward * Time.deltaTime * playerRunSpeed * verticalInput);
             transform.Translate(Vector3.right * Time.deltaTime * playerRunSpeed * horizontalInput);
-
-            //If they run, then the stamina bar will deplete faster. If it reaches close to 0, then they cannot run: out of stamina. 
-            currentStamina -= 20 * Time.deltaTime;
-            if(currentStamina < staminaMargin) {outOfStamina = true; }
+            playerAnim.SetFloat("Speed_f", 0.6f);
+            playerStats.RunningStaminaDrain();
         }
 
         //Else if the player is walking, it will play the walking animations and move at walking speed. 
         else if(isMoving) {
-            playerAnim.SetFloat("Speed_f", 0.3f);
             transform.Translate(Vector3.forward * Time.deltaTime * playerWalkSpeed * verticalInput);
             transform.Translate(Vector3.right * Time.deltaTime * playerWalkSpeed * horizontalInput); 
-            currentStamina += 10 * Time.deltaTime;             //This will keep recharging their stamina.
-            //If their current stamina has recharged close to the full bar, then they aren't of out stamina. 
-            if(currentStamina > maxBarValue - staminaMargin) {
-                outOfStamina = false;
-            }
+            playerAnim.SetFloat("Speed_f", 0.3f);
+            playerStats.NotRunningStaminaGain();   
         }
 
         //Else the player is idle and will just play the idle animation. 
         else {
             playerAnim.SetFloat("Speed_f", 0f);
-            currentStamina += 10 * Time.deltaTime;             //This will keep recharging their stamina.
-            //If their current stamina has recharged close to the full bar, then they aren't of out stamina. 
-            if(currentStamina > maxBarValue - staminaMargin) {
-                outOfStamina = false;
-            }
+            playerStats.NotRunningStaminaGain();
         }
 
         //Updates the player's stamina value on the slider UI. 
-        staminaBar.value = currentStamina;
+        playerStats.UpdateStaminaBar();
     }
 
     //This function resets the players y-velocity and adds an upwards force on them for a jump
     private void PlayerJump() {
-        playerAnim.SetTrigger("Jump_trig");
         playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        playerAnim.SetTrigger("Jump_trig");
     }
 
     //This simply checks all the collision objects that the player can collide with
@@ -124,10 +102,6 @@ public class PlayerController : MonoBehaviour
         //If the other object is the ground, then it will check if the player is still on it. 
         if(other.gameObject.CompareTag("Ground")) {
             isOnGround = true;
-        }
-
-        if(other.gameObject.CompareTag("Zombie")) {
-            //Remove health. 
         }
     }
 }
