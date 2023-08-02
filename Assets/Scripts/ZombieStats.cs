@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZombieStats : CharacterStats
 {
-    [SerializeField] private int damage;
+    [SerializeField] public int damage;
     public float attackSpeed;
 
     private void Start() {

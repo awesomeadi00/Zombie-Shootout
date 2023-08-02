@@ -91,9 +91,12 @@ public class ZombieSpawnManager : MonoBehaviour
         }
 
         //Once it hits round 20 and above, then we can officially start spawning enemies through a formula from BO2 zombies spawnrate. 
-                        //If the enemiesToSpawn variable hits '100', then the damage for the zombies would increase. 
         else {
             enemiesToSpawn = Mathf.FloorToInt(Mathf.Min(((0.09f * Mathf.Pow(waveNumber, 2)) - (0.0029f * waveNumber) + 23.9850f), 100));
+            //if the player manages to reach the higher rounds with a cap of 100, then it will begin to increase the zombies damage to the player. 
+            if(enemiesToSpawn == 100) {
+                zombieStats.damage++;
+            }
             StartCoroutine(SpawnerInstantiation(enemiesToSpawn, waveNumber));
         }
     }
