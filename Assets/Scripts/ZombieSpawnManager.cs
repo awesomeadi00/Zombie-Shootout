@@ -49,7 +49,6 @@ public class ZombieSpawnManager : MonoBehaviour
             //Once there are 0 zombies at the end, increment the wave number and deactivate the end-section and activate the start-section.
             //This way, in the next frame Update(), it will initiate a Coroutine to spawn the next zombie wave. 
             if(roundEndSection) {
-                Debug.Log("Round OVER!");
                 waveNumber++;
                 roundStartSection = true;
                 roundEndSection = false;
@@ -77,10 +76,9 @@ public class ZombieSpawnManager : MonoBehaviour
         roundNumberText.text = waveNumber.ToString();
         roundNumberText.color = Color.red;
         roundText.color = Color.red;
-        Debug.Log("Round: " + waveNumber);
+
         //Wait for 10 seconds. 
         yield return new WaitForSeconds(beginningRoundDelay);
-        Debug.Log("Zombies Spawning Now...");
 
         //After 10 seconds, display the round number in white to indicate it started. 
         roundNumberText.color = Color.white;
@@ -89,29 +87,25 @@ public class ZombieSpawnManager : MonoBehaviour
         //If the round number is less than 20, then spawn the number of zombies from the First Nineteen rounds array
         if(waveNumber < 20) {
             enemiesToSpawn = zombieCountArray_FirstNineteenRounds[waveNumber-1];
-            SpawnerInstantiation(enemiesToSpawn, waveNumber);
+            StartCoroutine(SpawnerInstantiation(enemiesToSpawn, waveNumber));
         }
 
         //Once it hits round 20 and above, then we can officially start spawning enemies through a formula from BO2 zombies spawnrate. 
+                        //If the enemiesToSpawn variable hits '100', then the damage for the zombies would increase. 
         else {
             enemiesToSpawn = Mathf.FloorToInt(Mathf.Min(((0.09f * Mathf.Pow(waveNumber, 2)) - (0.0029f * waveNumber) + 23.9850f), 100));
-                            //If the enemiesToSpawn variable hits '100', then the damage for the zombies would increase. 
-            SpawnerInstantiation(enemiesToSpawn, waveNumber);
+            StartCoroutine(SpawnerInstantiation(enemiesToSpawn, waveNumber));
         }
     }
 
     //This function instantiates the zombies depending on the spawn rate. 
-    private void SpawnerInstantiation(int enemies, int round) {
-        for(int i=0; i < enemiesToSpawn; i++) {
-            Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
-            StartCoroutine(WaitForNextZombie(round));
-        }
-    }
+    IEnumerator SpawnerInstantiation(int enemies, int round) {
+        float spawnRatePerRound = Mathf.Max((4 * (Mathf.Pow(0.95f, (0.5f * round) - 1)) + 1), 2f);
 
-    //This function is a SpawnRate timer for when the zombies should spawn depending on the wave number, based on a formula also from BO2 zombies. 
-    IEnumerator WaitForNextZombie(int wave) {
-        float spawnRatePerRound = Mathf.Max((2 * (Mathf.Pow(0.95f, wave - 1))), 0.1f);
-        yield return new WaitForSeconds(spawnRatePerRound);
+        for(int i=0; i < enemiesToSpawn; i++) {
+            yield return new WaitForSeconds(spawnRatePerRound);
+            Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
+        }
     }
 
     //This function generates a random spawn position within the colliders and gets the relative y position of the terrain based on the x and z coordinates.
