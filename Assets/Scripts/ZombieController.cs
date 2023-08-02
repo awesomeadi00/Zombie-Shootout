@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ZombieController : MonoBehaviour
 {
-    private float zombieSpeed;
-    [SerializeField] private float zombieWalkingSpeed = 2;
+    [SerializeField] private float zombieSpeed;
+    private float[] zombieWalkingSpeeds = {1, 2, 3, 4};
     private float zombieIdleSpeed = 0;
     [SerializeField] private float stoppingDistance = 2; 
     private float timeOfLastAttack = 0;
@@ -39,7 +39,7 @@ public class ZombieController : MonoBehaviour
     private void MoveZombie() {
         //If he can move and is not attacking, then he will move towards the player. 
         if(!isAttacking && canMove) {
-            zombieSpeed = zombieWalkingSpeed;
+            zombieSpeed = zombieWalkingSpeeds[Random.Range(0, zombieWalkingSpeeds.Length)];
             zombieAnim.SetFloat("Speed_f", 0.6f);
             Vector3 lookDirection = (playerObject.transform.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, playerObject.transform.position, zombieSpeed * Time.deltaTime);
@@ -84,7 +84,7 @@ public class ZombieController : MonoBehaviour
         zombieStats.dealDamage(statsToDamage);
     }
 
-    //Makes the zombie stand still for 2.16 seconds when spawned.
+    //Makes the zombie stand still for 2.16 seconds when spawned as that is initial animation time length.
     IEnumerator IdleStart() {
         yield return new WaitForSeconds(2.16f);
         isIdle = false;

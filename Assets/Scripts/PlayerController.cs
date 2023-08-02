@@ -122,10 +122,5 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
         }
     }
-
-    IEnumerator DeathAnimation() {
-        yield return new WaitForSeconds(5);
-        //Animation;
-    }
 }
 

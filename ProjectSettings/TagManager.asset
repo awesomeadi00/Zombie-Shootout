@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Zombie
+  - Border
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Zombie
   - 
   - 
   - 

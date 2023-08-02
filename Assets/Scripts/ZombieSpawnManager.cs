@@ -1,63 +1,139 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ZombieSpawnManager : MonoBehaviour
-{
+{   
+    //Spawn Position Variables: 
     private float zRange = 56;
     private float xRange = 59;
-    private PlayerStats playerStats;
+    private float rayOriginHeight = 25;
+    private float terrainHeightY;
 
+    private PlayerStats playerStats;
+    private ZombieStats zombieStats;
     [SerializeField] GameObject zombiePrefab;
+    [SerializeField] TextMeshProUGUI roundNumberText;
+    [SerializeField] TextMeshProUGUI roundText;
+
+    //Spawn Data Variables: 
+    private int[] zombieCountArray_FirstNineteenRounds = {6, 8, 13, 18, 24, 27, 28, 28, 29, 33, 34, 36, 39, 41, 44, 47, 50, 53, 56};
+    private float beginningRoundDelay = 10;
+    private bool roundStartSection = true;
+    private bool roundEndSection = false;
     private int waveNumber = 1;
+    private int enemiesToSpawn;
     private int zombieCount;
 
-    // Start is called before the first frame update
+    //Start is called before the first frame update
     void Start()
     {
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
-        SpawnZombieWave(waveNumber);
+        zombieStats = GetComponent<ZombieStats>();
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
         zombieCount = FindObjectsOfType<ZombieController>().Length;
 
-        if(zombieCount == 0) {
-            waveNumber++;
-            SpawnZombieWave(waveNumber);
+        //There are two moments where there are 0 zombies on the map, at the start of the round and at the end of a round. 
+        if(zombieCount == 0 && playerStats.DeathStatus() == false) {
+            //If there are 0 zombies at the start, initiate a Coroutine to spawn a zombie wave. 
+            if(roundStartSection) {
+                StartCoroutine(SpawnZombieWave(waveNumber));
+                roundStartSection = false;  //Calls the coroutine once.      
+            }
+
+            //Once there are 0 zombies at the end, increment the wave number and deactivate the end-section and activate the start-section.
+            //This way, in the next frame Update(), it will initiate a Coroutine to spawn the next zombie wave. 
+            if(roundEndSection) {
+                Debug.Log("Round OVER!");
+                waveNumber++;
+                roundStartSection = true;
+                roundEndSection = false;
+            }
         }
 
-        if(playerStats.DeathStatus()) {
+        //Once a zombie has spawned, then indicate the roundEndSection as active. 
+        if(zombieCount >= 1) {
+            roundEndSection = true;
+        }
+
+        if(Input.GetMouseButtonDown(0)) {
             //Destroy every zombie on the map if it is game over. 
             GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
             foreach(GameObject zombie in zombies) {
                 Destroy(zombie);
             } 
-
-            //Add a section here for the boss. 
+                            //Add a section here for the boss. 
         }
     }
 
     //This function simply spawns a certain number of zombies at a random position within the colliders
-    private void SpawnZombieWave(int enemiesToSpawn) {
-        enemiesToSpawn = Mathf.FloorToInt(enemiesToSpawn * 1.5f) + 7;
-        Debug.Log(enemiesToSpawn);
-        for(int i=0; i < enemiesToSpawn; i++) {
-            Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
+    IEnumerator SpawnZombieWave(int waveNumber) {
+        //Displays round number in read before starting the round. 
+        roundNumberText.text = waveNumber.ToString();
+        roundNumberText.color = Color.red;
+        roundText.color = Color.red;
+        Debug.Log("Round: " + waveNumber);
+        //Wait for 10 seconds. 
+        yield return new WaitForSeconds(beginningRoundDelay);
+        Debug.Log("Zombies Spawning Now...");
+
+        //After 10 seconds, display the round number in white to indicate it started. 
+        roundNumberText.color = Color.white;
+        roundText.color = Color.white;
+
+        //If the round number is less than 20, then spawn the number of zombies from the First Nineteen rounds array
+        if(waveNumber < 20) {
+            enemiesToSpawn = zombieCountArray_FirstNineteenRounds[waveNumber-1];
+            SpawnerInstantiation(enemiesToSpawn, waveNumber);
+        }
+
+        //Once it hits round 20 and above, then we can officially start spawning enemies through a formula from BO2 zombies spawnrate. 
+        else {
+            enemiesToSpawn = Mathf.FloorToInt(Mathf.Min(((0.09f * Mathf.Pow(waveNumber, 2)) - (0.0029f * waveNumber) + 23.9850f), 100));
+                            //If the enemiesToSpawn variable hits '100', then the damage for the zombies would increase. 
+            SpawnerInstantiation(enemiesToSpawn, waveNumber);
         }
     }
 
+    //This function instantiates the zombies depending on the spawn rate. 
+    private void SpawnerInstantiation(int enemies, int round) {
+        for(int i=0; i < enemiesToSpawn; i++) {
+            Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
+            StartCoroutine(WaitForNextZombie(round));
+        }
+    }
+
+    //This function is a SpawnRate timer for when the zombies should spawn depending on the wave number, based on a formula also from BO2 zombies. 
+    IEnumerator WaitForNextZombie(int wave) {
+        float spawnRatePerRound = Mathf.Max((2 * (Mathf.Pow(0.95f, wave - 1))), 0.1f);
+        yield return new WaitForSeconds(spawnRatePerRound);
+    }
 
     //This function generates a random spawn position within the colliders and gets the relative y position of the terrain based on the x and z coordinates.
     private Vector3 GenerateSpawnPosition() {
+        RaycastHit hit;
         float spawnPosX = Random.Range(transform.position.x - xRange, transform.position.x + xRange);
         float spawnPosZ = Random.Range(transform.position.z - zRange, transform.position.z + zRange);
-        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
-        randomPos.y = Terrain.activeTerrain.SampleHeight(randomPos) + 0.5f;
-        Debug.Log("Sample Height: " + Terrain.activeTerrain.SampleHeight(randomPos));
-        Debug.Log("Random Pos Y: " + randomPos.y);
+
+        //Shoot a ray down from this coordinate (spawn point). 
+        Ray ray = new Ray(new Vector3(spawnPosX, rayOriginHeight, spawnPosZ), Vector3.down); 
+        
+        //If the ray hits a collider, then it will return the y coordinate of that collider which would be the terrain height. 
+        if(Physics.Raycast(ray, out hit)) {
+            terrainHeightY = hit.point.y;
+        }
+
+        //If it doesn't hit a collider, then by default let the terrain height spawn point be 25 as that is the highest point for a zombie to spawn on the terrain.
+        else {
+            terrainHeightY = rayOriginHeight;
+        }
+        
+        Vector3 randomPos = new Vector3(spawnPosX, terrainHeightY, spawnPosZ);
         return randomPos;
     }
 }
