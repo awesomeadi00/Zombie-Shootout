@@ -64,7 +64,7 @@ public class ZombieSpawnManager : MonoBehaviour
             //Destroy every zombie on the map if it is game over. 
             GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
             foreach(GameObject zombie in zombies) {
-                Destroy(zombie);
+                zombie.SetActive(false);
             } 
                             //Add a section here for the boss. 
         }
@@ -93,7 +93,7 @@ public class ZombieSpawnManager : MonoBehaviour
         //Once it hits round 20 and above, then we can officially start spawning enemies through a formula from BO2 zombies spawnrate. 
         else {
             enemiesToSpawn = Mathf.FloorToInt(Mathf.Min(((0.09f * Mathf.Pow(waveNumber, 2)) - (0.0029f * waveNumber) + 23.9850f), 100));
-            //if the player manages to reach the higher rounds with a cap of 100, then it will begin to increase the zombies damage to the player. 
+            //If the player manages to reach the higher rounds with a cap of 100, then it will begin to increase the zombies damage to the player 
             if(enemiesToSpawn == 100) {
                 zombieStats.damage++;
             }
@@ -107,7 +107,13 @@ public class ZombieSpawnManager : MonoBehaviour
 
         for(int i=0; i < enemiesToSpawn; i++) {
             yield return new WaitForSeconds(spawnRatePerRound);
-            Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
+            GameObject zombiePrefab = ObjectPooler.SharedInstance.GetPooledObject();
+            if (zombiePrefab != null)
+            {
+                zombiePrefab.SetActive(true);                                   //Activate in hierarchy
+                zombiePrefab.transform.position = GenerateSpawnPosition();      //Position it at spawn position
+            }
+            // Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
         }
     }
 

@@ -383,6 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 254363105}
   - component: {fileID: 254363106}
+  - component: {fileID: 254363107}
   m_Layer: 0
   m_Name: Spawn Manager
   m_TagString: Untagged
@@ -420,6 +421,20 @@ MonoBehaviour:
   zombiePrefab: {fileID: 7717609595121032852, guid: 2587370fffa1546aba54f071d2d609a7, type: 3}
   roundNumberText: {fileID: 581008236}
   roundText: {fileID: 1035148302}
+--- !u!114 &254363107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254363104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2a27c4f4a9f4589818dde789642dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPool: {fileID: 7717609595121032852, guid: 2587370fffa1546aba54f071d2d609a7, type: 3}
+  amountToPool: 100
 --- !u!1 &342097757
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -539.6, y: -310.5}
+  m_AnchoredPosition: {x: -539.6, y: -282}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &581008236
@@ -1831,7 +1846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -673, y: -310}
+  m_AnchoredPosition: {x: -673, y: -281.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1035148302
@@ -2779,7 +2794,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -673, y: -378}
+  m_AnchoredPosition: {x: -673, y: -349.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1958348879
