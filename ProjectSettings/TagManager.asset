@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Zombie
   - Border
+  - Health Collider
+  - Ammo Colider
   layers:
   - Default
   - TransparentFX
@@ -14,9 +16,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
   - Zombie
-  - 
+  - Station Colliders
+  - Player
   - 
   - 
   - 

@@ -38,8 +38,13 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void Heal(int heal) {
-        int healthAfterHeal = health + heal;
-        SetHealth(healthAfterHeal);
+        if(health + heal < 100) {
+            SetHealth(health + heal);
+        }
+
+        else if(health + heal >= 100) {
+            SetHealth(maxHealth);
+        }
     }   
 
     //All entities will have different initialization values. 

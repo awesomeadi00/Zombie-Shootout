@@ -59,4 +59,9 @@ public class PlayerStats : CharacterStats
     public bool DeathStatus() {
         return isDead;
     }
+
+    //This is a getter for the health value of the player.
+    public int ReturnHealth() {
+        return health;
+    }
  }
