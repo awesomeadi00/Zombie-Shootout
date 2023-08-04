@@ -9,6 +9,10 @@ TagManager:
   - Border
   - Health Collider
   - Ammo Colider
+  - Armour Collider
+  - Stamina Collider
+  - Damage Collider
+  - Point Collider
   layers:
   - Default
   - TransparentFX
