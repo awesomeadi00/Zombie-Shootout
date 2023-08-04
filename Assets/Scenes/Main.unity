@@ -636,8 +636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 7717609595121032852, guid: 2587370fffa1546aba54f071d2d609a7, type: 3}
-  roundNumberText: {fileID: 0}
-  roundText: {fileID: 0}
+  roundNumberText: {fileID: 1433732938}
+  roundText: {fileID: 649394176}
 --- !u!114 &254363107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3483,15 +3483,15 @@ PrefabInstance:
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: healthFullText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1375686186}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1339183240}
     - target: {fileID: 8833196518891944776, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.673801
@@ -3817,15 +3817,15 @@ PrefabInstance:
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: healthFullText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1375686186}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1339183240}
     - target: {fileID: 8833196518891944776, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.6738007
@@ -3923,15 +3923,15 @@ PrefabInstance:
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: healthFullText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1375686186}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 5084502323570435433, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1339183240}
     - target: {fileID: 8833196518891944776, guid: 5c636e57af0e94f63876b2e64ea393c7, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.673801
@@ -4303,11 +4303,11 @@ PrefabInstance:
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 751649728}
     - target: {fileID: 6267410343223137185, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: m_Name
       value: Ammo Station 2
@@ -6618,11 +6618,11 @@ PrefabInstance:
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 751649728}
     - target: {fileID: 6267410343223137185, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: m_Name
       value: Ammo Station 3
@@ -6943,11 +6943,11 @@ PrefabInstance:
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: notAvailableText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 768035585}
     - target: {fileID: 2703560326583712035, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: colliderTextPopUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 751649728}
     - target: {fileID: 6267410343223137185, guid: 655c414f0d440491b9457ee69e96e309, type: 3}
       propertyPath: m_Name
       value: Ammo Station 1
@@ -7025,11 +7025,19 @@ PrefabInstance:
     - target: {fileID: 2282169466935242110, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 733866542}
     - target: {fileID: 2282169466935242110, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 358744254}
+    - target: {fileID: 2282169466935242110, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
+      propertyPath: zombiePrefab
+      value: 
+      objectReference: {fileID: 7717609595121032852, guid: 2587370fffa1546aba54f071d2d609a7, type: 3}
+    - target: {fileID: 2282169466935242110, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
+      propertyPath: playerPointsText
+      value: 
+      objectReference: {fileID: 432259390}
     - target: {fileID: 2324130765869780042, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
       propertyPath: m_Material
       value: 

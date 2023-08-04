@@ -1983,8 +1983,10 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   isDead: 0
+  playerObject: {fileID: 7880731061832124928, guid: 57dc99ad7861f49e8be2a43f257c56ea, type: 3}
   damage: 0
   attackSpeed: 0
+  pointValue: 0
 --- !u!1 &7746132949960460258
 GameObject:
   m_ObjectHideFlags: 0
