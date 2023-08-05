@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private PlayerStats playerStats;
+    private AudioSource walkingAudio;
 
     //Start is called before the first frame update
     private void Start()
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
+        walkingAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -64,11 +66,19 @@ public class PlayerController : MonoBehaviour
 
         //This will check if the player is moving at all, to activate the idle animation. 
         if(horizontalInput == 0 && verticalInput == 0) {isMoving = false; }
-        else {isMoving = true; }
+        else {
+            isMoving = true;     
+        }
 
         //If the Left Shift Key Button is held down, then the player will be able to run. 
         if(Input.GetKey(KeyCode.LeftShift)) {isRunning = true; }
         else {isRunning = false; }
+
+        if((horizontalInput > 0 || verticalInput > 0) && isOnGround && walkingAudio.isPlaying == false) {
+            walkingAudio.volume = Random.Range(0.8f, 1);
+            walkingAudio.pitch = Random.Range(0.8f, 1.1f);
+            walkingAudio.Play();
+        }
     }
 
     //Player moves forward/backwards and left/right depending on speed and input value. 

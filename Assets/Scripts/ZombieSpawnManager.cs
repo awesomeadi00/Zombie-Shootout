@@ -60,7 +60,7 @@ public class ZombieSpawnManager : MonoBehaviour
             roundEndSection = true;
         }
 
-        if(Input.GetMouseButtonDown(0)) {
+        if(playerStats.DeathStatus()) {
             //Destroy every zombie on the map if it is game over. 
             GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
             foreach(GameObject zombie in zombies) {
@@ -113,7 +113,6 @@ public class ZombieSpawnManager : MonoBehaviour
                 zombiePrefab.SetActive(true);                                   //Activate in hierarchy
                 zombiePrefab.transform.position = GenerateSpawnPosition();      //Position it at spawn position
             }
-            // Instantiate(zombiePrefab, GenerateSpawnPosition(), zombiePrefab.transform.rotation);
         }
     }
 

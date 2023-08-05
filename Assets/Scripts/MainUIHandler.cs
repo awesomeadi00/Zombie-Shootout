@@ -75,7 +75,7 @@ public class MainUIHandler : MonoBehaviour
 
     //This function will be called when the scene loads to start the 
     public void SetGameSettings() {
-        // gameAudio.volume = MainManager.Instance.volumeValue * 0.25f;
+        // gameAudio.volume = MainManager.Instance.volumeValue * 0.1f;
         //bossActive variable
         //Round number variable
     }
