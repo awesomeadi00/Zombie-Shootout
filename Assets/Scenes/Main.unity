@@ -7295,37 +7295,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 286167859, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: Priority
-      value: 256
+    - target: {fileID: 891142975, guid: a92071c271d364467ba651553c40c074, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.92
       objectReference: {fileID: 0}
-    - target: {fileID: 371673845, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: Priority
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244338967, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: Priority
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 1530640883, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: Priority
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 2125880637, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: Priority
-      value: 256
+    - target: {fileID: 891142975, guid: a92071c271d364467ba651553c40c074, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.77
       objectReference: {fileID: 0}
     - target: {fileID: 5194454704189755404, guid: a92071c271d364467ba651553c40c074, type: 3}
       propertyPath: m_Name
       value: Environment
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595421571015564555, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931981228949127458, guid: a92071c271d364467ba651553c40c074, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 80.6
       objectReference: {fileID: 0}
     - target: {fileID: 8958723331049884366, guid: a92071c271d364467ba651553c40c074, type: 3}
       propertyPath: m_RootOrder
