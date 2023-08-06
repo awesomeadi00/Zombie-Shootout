@@ -9,6 +9,8 @@ public class WeaponShooting : MonoBehaviour
     [SerializeField] private ParticleSystem gunShotEffect;
     [SerializeField] private AudioClip gunShotSound;
     [SerializeField] private AudioClip gunReloadSound;
+    [SerializeField] private GameObject Zombie;
+    private CharacterStats zombieStats;
 
     private bool reloadingCompleted = true;
     private PlayerStats playerStats;
@@ -47,9 +49,11 @@ public class WeaponShooting : MonoBehaviour
 
         gunAudio.PlayOneShot(gunShotSound, 0.07f);
 
+        //If it hits a zombie, call the damage zombie function in Player Stats and pass that specific zombie's characterstats
         if(Physics.Raycast(ray, out hit, weaponRange)) {
             if(hit.transform.CompareTag("Zombie")) {
-                playerStats.DamageZombie();
+                zombieStats = hit.transform.GetComponent<CharacterStats>();
+                playerStats.DamageZombie(zombieStats);
             }
         }
     }   

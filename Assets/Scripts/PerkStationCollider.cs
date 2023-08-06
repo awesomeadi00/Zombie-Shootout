@@ -16,9 +16,9 @@ public class PerkStationCollider :  MonoBehaviour
     //Perk Station Values:
     private PlayerStats playerStats;
     private int pointsNeeded;
-    private int armourPoints = 1000;
-    private int staminaPoints = 2000;
-    private int damagePoints = 3000;
+    private int armourPoints = 1500;
+    private int staminaPoints = 3000;
+    private int damagePoints = 5000;
     private int pointMultPoints = 4000;
 
 
@@ -70,7 +70,7 @@ public class PerkStationCollider :  MonoBehaviour
                     }
 
                     else if(gameObject.tag == "Point Collider") {
-                        playerStats.pointMultiplier += 1;
+                        playerStats.pointMultiplier += 0.2f;
                         playerStats.playerPoints -= pointMultPoints;
                         Debug.Log("Points Multiplied");
                     }

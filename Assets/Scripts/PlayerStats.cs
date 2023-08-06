@@ -41,7 +41,7 @@ public class PlayerStats : CharacterStats
     {
         base.InitializeVariables();     //1) Player Health set to 100
         playerPoints = 0;               //2) Player Points set to 0
-        inflictingDamage = 1;           //3) Player can damage zombies 1hp per hit
+        inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
 
         //All perk values set to default.
         staminaEndurance = 0;
@@ -96,9 +96,9 @@ public class PlayerStats : CharacterStats
     }
 
     //This function will damage the zombie depending on the gun damage.  
-    public void DamageZombie() {
+    public void DamageZombie(CharacterStats statsToDamage) {
         float overallDamage = inflictingDamage + damageBoost;
-        zombieStats.TakeDamage(overallDamage);
+        statsToDamage.TakeDamage(overallDamage);
     }
 
 

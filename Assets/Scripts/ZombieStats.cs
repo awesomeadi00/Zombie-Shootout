@@ -6,6 +6,7 @@ public class ZombieStats : CharacterStats
 {
     private PlayerStats playerStats;
     [SerializeField] GameObject playerObject;
+    [SerializeField] ParticleSystem deathParticle;
     [SerializeField] public float damage;         //1) Zombie has a damage value that they inflict on the player. 
     public float attackSpeed;                     //2) Zombie has a speed at which they attack the player. 
     public float zombiePointPerKill;              //3) Zombie has a point value that the player receives when they kill them.
@@ -37,7 +38,11 @@ public class ZombieStats : CharacterStats
     public override void Die()
     {
         base.Die();
+        deathParticle.Play();       //Not working...
         gameObject.SetActive(false);
-        // playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; //Apparently there is an error here with referencing the script. 
+        playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; 
+        Debug.Log(zombiePointPerKill);
+        Debug.Log(playerStats.pointMultiplier);
+        Debug.Log(playerStats.playerPoints); 
     }
 }
