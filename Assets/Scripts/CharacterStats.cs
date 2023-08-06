@@ -54,4 +54,8 @@ public class CharacterStats : MonoBehaviour
         SetHealth(maxHealth);
         isDead = false;
     }
+
+    public float Test() {
+        return health;
+    }
 }

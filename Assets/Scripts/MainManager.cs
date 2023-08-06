@@ -7,7 +7,6 @@ public class MainManager : MonoBehaviour
     public static MainManager Instance;
 
     //Variables to pass through the menu scene: 
-    public bool bossActive;
     public float volumeValue;
 
     void Awake(){

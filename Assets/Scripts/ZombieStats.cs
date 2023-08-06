@@ -7,8 +7,8 @@ public class ZombieStats : CharacterStats
     private PlayerStats playerStats;
     [SerializeField] GameObject playerObject;
     [SerializeField] public float damage;         //1) Zombie has a damage value that they inflict on the player. 
-    public float attackSpeed;                   //2) Zombie has a speed at which they attack the player. 
-    public float pointValue;                      //3) Zombie has a point value that the player receives when they kill them.
+    public float attackSpeed;                     //2) Zombie has a speed at which they attack the player. 
+    public float zombiePointPerKill;              //3) Zombie has a point value that the player receives when they kill them.
 
     private void Start() {
         playerStats = playerObject.gameObject.GetComponent<PlayerStats>();
@@ -23,7 +23,7 @@ public class ZombieStats : CharacterStats
         isDead = false;
         damage = 2;
         attackSpeed = 2f;
-        pointValue = 50;
+        zombiePointPerKill = 50;
     }
 
     //This function is called in the Zombie controller, it takes the player's CharacterStats and deals damage to the player's health. 
@@ -33,10 +33,11 @@ public class ZombieStats : CharacterStats
         statsToDamage.TakeDamage(damage);
     }
 
-    //For a zombie, when their health goes to 0, we Destroy them from the scene.
+    //For a zombie, when their health goes to 0, we set the object as false from the scene and add the points to the player's overall points. 
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; //Apparently there is an error here with referencing the script. 
     }
 }

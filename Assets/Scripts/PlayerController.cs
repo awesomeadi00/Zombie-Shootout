@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         walkingAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+    //Update is called to get the Player's Input:
     private void Update()
     {
         if(playerStats.DeathStatus() == false) {
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //This is to ensure that the physics applied on the user aren't jittery
+    //This calls the movement of the player. It's a fixed update to ensure that the movement physics aren't jittery
     private void FixedUpdate() {
         if(playerStats.DeathStatus() == false) {
             MovePlayer();
@@ -66,49 +66,73 @@ public class PlayerController : MonoBehaviour
 
         //This will check if the player is moving at all, to activate the idle animation. 
         if(horizontalInput == 0 && verticalInput == 0) {isMoving = false; }
-        else {
-            isMoving = true;     
-        }
+        else {isMoving = true; }
 
         //If the Left Shift Key Button is held down, then the player will be able to run. 
         if(Input.GetKey(KeyCode.LeftShift)) {isRunning = true; }
         else {isRunning = false; }
 
+        //This checks if the player is moving at all and is on the ground, then play the walking audio track. 
         if((horizontalInput > 0 || verticalInput > 0) && isOnGround && walkingAudio.isPlaying == false) {
             walkingAudio.volume = Random.Range(0.8f, 1);
             walkingAudio.pitch = Random.Range(0.8f, 1.1f);
             walkingAudio.Play();
         }
+
+        if(Input.GetMouseButton(0)) {WeaponShootingAnimation(); }    //If the mouse is held down then play the weapon shooting animation. 
+        if(Input.GetKeyDown(KeyCode.R)) {WeaponReloadAnimation(); }  //If the user presses 'R', then play the reload animation. 
     }
 
     //Player moves forward/backwards and left/right depending on speed and input value. 
     private void MovePlayer() {
-        playerAnim.SetBool("Static_b", true);
+        playerAnim.SetBool("Static_b", true); //Default animation bool set so that walking/running is static and not actual movement. 
 
-        //If the player is running, it will play the running animations and move at running speed. 
-        if(isRunning && isMoving && !playerStats.outOfStamina) {
-            transform.Translate(Vector3.forward * Time.deltaTime * playerRunSpeed * verticalInput);
-            transform.Translate(Vector3.right * Time.deltaTime * playerRunSpeed * horizontalInput);
-            playerAnim.SetFloat("Speed_f", 0.6f);
-            playerStats.RunningStaminaDrain();
-        }
-
-        //Else if the player is walking, it will play the walking animations and move at walking speed. 
-        else if(isMoving) {
-            transform.Translate(Vector3.forward * Time.deltaTime * playerWalkSpeed * verticalInput);
-            transform.Translate(Vector3.right * Time.deltaTime * playerWalkSpeed * horizontalInput); 
-            playerAnim.SetFloat("Speed_f", 0.3f);
-            playerStats.NotRunningStaminaGain();   
-        }
-
-        //Else the player is idle and will just play the idle animation. 
-        else {
-            playerAnim.SetFloat("Speed_f", 0f);
-            playerStats.NotRunningStaminaGain();
-        }
+        //Controls player movement
+        if(isRunning && isMoving && !playerStats.outOfStamina) {PlayerRun(); }
+        else if(isMoving) {PlayerWalk(); }
+        else {PlayerIdle(); }
 
         //Updates the player's stamina value on the slider UI. 
         playerStats.UpdateStaminaBar();
+    }
+
+
+    //Helper functions: ========================================================================================================================
+    //This function makes the player run foward with its animation: 
+    private void PlayerRun() {
+        transform.Translate(Vector3.forward * Time.deltaTime * playerRunSpeed * verticalInput);
+        transform.Translate(Vector3.right * Time.deltaTime * playerRunSpeed * horizontalInput);
+        playerAnim.SetFloat("Speed_f", 0.6f);
+        playerStats.RunningStaminaDrain();
+    }
+
+    //This function makes the player walk forward with its animation: 
+    private void PlayerWalk() {
+        transform.Translate(Vector3.forward * Time.deltaTime * playerWalkSpeed * verticalInput);
+        transform.Translate(Vector3.right * Time.deltaTime * playerWalkSpeed * horizontalInput); 
+        playerAnim.SetFloat("Speed_f", 0.3f);
+        playerStats.NotRunningStaminaGain();   
+    }
+
+    //This function executes when the player is Idle:
+    private void PlayerIdle() {
+        playerAnim.SetFloat("Speed_f", 0f);
+        playerAnim.SetInteger("WeaponType_int", 3);
+        playerAnim.SetBool("Shoot_b", false);
+        playerAnim.SetBool("Reload_b", false);
+        playerStats.NotRunningStaminaGain();
+    }
+    
+    //This function starts the shooting animation. 
+    private void WeaponShootingAnimation() {
+        playerAnim.SetBool("Shoot_b", true);
+        playerAnim.SetBool("FullAuto_b", true);
+    }
+
+    //This function starts the reloading animation. 
+    private void WeaponReloadAnimation() {
+        playerAnim.SetBool("Shoot_b", false);
+        playerAnim.SetBool("Reload_b", true);
     }
 
     //This function resets the players y-velocity and adds an upwards force on them for a jump
