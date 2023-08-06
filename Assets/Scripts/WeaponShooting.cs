@@ -10,6 +10,7 @@ public class WeaponShooting : MonoBehaviour
     [SerializeField] private AudioClip gunShotSound;
     [SerializeField] private AudioClip gunReloadSound;
 
+    private bool reloadingCompleted = true;
     private PlayerStats playerStats;
     private AudioSource gunAudio;
     private float weaponRange = 20;
@@ -29,8 +30,9 @@ public class WeaponShooting : MonoBehaviour
             Shoot();
         }
 
-        if(Input.GetKeyDown(KeyCode.R)) {
+        if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
             gunAudio.PlayOneShot(gunReloadSound, 1.34f);
+            StartCoroutine(Reloading());
         }        
     }
 
@@ -58,5 +60,12 @@ public class WeaponShooting : MonoBehaviour
             lastShootTime = Time.time;
             RaycastShoot();
         }
+    }
+
+    //Just a delay for the reloading sound effect so that you cannot execute it multiple times. 
+    IEnumerator Reloading() {
+        reloadingCompleted = false;
+        yield return new WaitForSeconds(1.6f);
+        reloadingCompleted = true;
     }
 }
