@@ -69,7 +69,7 @@ public class PlayerStats : CharacterStats
 
     //When the player runs, then the stamina bar will deplete faster. If it reaches close to 0, then they cannot run: out of stamina. 
     public void RunningStaminaDrain() {
-        currentStamina -= (20 + CalculateStaminaEndurance()) * Time.deltaTime;       //This is not working so please fix. 
+        // currentStamina -= (20 + CalculateStaminaEndurance()) * Time.deltaTime;       //This is not working so please fix. 
         currentStamina -= 20 * Time.deltaTime;
         if(currentStamina < barMargin) {
             outOfStamina = true; 

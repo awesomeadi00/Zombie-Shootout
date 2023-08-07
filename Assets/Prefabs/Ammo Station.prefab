@@ -280,11 +280,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332738813664405662, guid: 94ce7a856e2df463597c54cca957fe4f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.91
+      value: -1.84
       objectReference: {fileID: 0}
     - target: {fileID: 332738813664405662, guid: 94ce7a856e2df463597c54cca957fe4f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.29
+      value: -1.02
       objectReference: {fileID: 0}
     - target: {fileID: 332738813664405662, guid: 94ce7a856e2df463597c54cca957fe4f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6828827551306173364, guid: 94ce7a856e2df463597c54cca957fe4f, type: 3}
+      propertyPath: collectSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ee6fa16d1507404dbad73bc796dd25c, type: 3}
     - target: {fileID: 6892404368688029867, guid: 94ce7a856e2df463597c54cca957fe4f, type: 3}
       propertyPath: m_Name
       value: Ammo Station Collider

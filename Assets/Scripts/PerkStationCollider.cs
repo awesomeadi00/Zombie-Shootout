@@ -17,13 +17,18 @@ public class PerkStationCollider :  MonoBehaviour
     private PlayerStats playerStats;
     private int pointsNeeded;
     private int armourPoints = 1500;
-    private int staminaPoints = 3000;
-    private int damagePoints = 5000;
-    private int pointMultPoints = 4000;
+    private int staminaPoints = 2000;
+    private int damagePoints = 4000;
+    private int pointMultPoints = 3000;
+    [SerializeField] private AudioClip collectSound;
+    private AudioSource playerAudio;
 
 
     //Start is called before the first frame update
-    void Start() {InitializeStationGameObjects(); }
+    void Start() {
+        InitializeStationGameObjects(); 
+        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();    
+    }
 
     void Update() {
         armourValueText.text = "+" + playerStats.armourEndurance.ToString();
@@ -52,29 +57,26 @@ public class PerkStationCollider :  MonoBehaviour
             if(playerStats.playerPoints >= pointsNeeded) {
                 colliderTextPopUp.gameObject.SetActive(true);
                 //If they press 'c', then depending on the perk, that will boost that player stats value.
-                if(Input.GetKeyDown(KeyCode.C)) {                    
+                if(Input.GetKeyDown(KeyCode.C)) {     
+                    playerAudio.PlayOneShot(collectSound, 1.0f);               
                     if(gameObject.tag == "Armour Collider") {
                         playerStats.armourEndurance += 1;
                         playerStats.playerPoints -= armourPoints;
-                        Debug.Log("Armour Endurnce Boosted");
                     }
 
                     else if(gameObject.tag == "Stamina Collider") {
                         playerStats.staminaEndurance += 1;
                         playerStats.playerPoints -= staminaPoints;
-                        Debug.Log("Stamina Endurnce Boosted");
                     }
 
                     else if(gameObject.tag == "Damage Collider") {
                         playerStats.damageBoost += 1;
                         playerStats.playerPoints -= damagePoints;
-                        Debug.Log("Damage Boosted");
                     }
 
                     else if(gameObject.tag == "Point Collider") {
                         playerStats.pointMultiplier += 0.2f;
                         playerStats.playerPoints -= pointMultPoints;
-                        Debug.Log("Points Multiplied");
                     }
                 }
             }

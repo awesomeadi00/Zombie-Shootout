@@ -17,10 +17,14 @@ public class ZombieController : MonoBehaviour
     private Rigidbody zombieRb;
     private Animator zombieAnim;
     private ZombieStats zombieStats;
+    private AudioSource zombieAudio;
+    [SerializeField] private AudioClip[] zombieGrowls;
+    private bool hasGrowled = true;
 
     // Start is called before the first frame update
     void Start()
     {   
+        zombieAudio = GetComponent<AudioSource>();
         zombieAnim = GetComponent<Animator>();
         zombieRb = GetComponent<Rigidbody>();
         zombieStats = GetComponent<ZombieStats>();
@@ -33,6 +37,10 @@ public class ZombieController : MonoBehaviour
         //If the zombie is not idle anymore, then he can start moving. 
         if(!isIdle) {
             MoveZombie();
+        }
+
+        if(gameObject.activeInHierarchy && hasGrowled) {
+            StartCoroutine(ZombieGrowl());
         }
     }
 
@@ -88,5 +96,15 @@ public class ZombieController : MonoBehaviour
     IEnumerator IdleStart() {
         yield return new WaitForSeconds(2.16f);
         isIdle = false;
+    }
+
+    //This simply waits for some random time and then makes a zombie growl.
+    private IEnumerator ZombieGrowl() {
+        hasGrowled = false;
+        float delayTime = Random.Range(5f, 10f);
+        yield return new WaitForSeconds(delayTime);
+        int zombieGrowlIndex = Random.Range(0, zombieGrowls.Length);
+        zombieAudio.PlayOneShot(zombieGrowls[zombieGrowlIndex], 1.0f); 
+        hasGrowled = true;
     }
 }

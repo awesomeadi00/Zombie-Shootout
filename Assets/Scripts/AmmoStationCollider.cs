@@ -14,10 +14,13 @@ public class AmmoStationCollider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI notAvailableText;
     private int ammoOnLoad;
     private int ammoBackUp;
+    [SerializeField] private AudioClip collectSound;
+    private AudioSource playerAudio;
 
     //Start is called before the first frame update
     void Start() {
-        InitializeStationGameObjects(); 
+        InitializeStationGameObjects();
+        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();   
     }
 
     public virtual void InitializeStationGameObjects() {
@@ -35,6 +38,7 @@ public class AmmoStationCollider : MonoBehaviour
                 colliderTextPopUp.gameObject.SetActive(true);
                 //If pressed 'c', it will restock ammo into the player's stored ammo section. 
                 if(Input.GetKeyDown(KeyCode.C)) {
+                    playerAudio.PlayOneShot(collectSound, 1.0f);
                     colliderTextPopUp.gameObject.SetActive(false);
                     RestockAmmo();
                     itemPerk.gameObject.SetActive(false);

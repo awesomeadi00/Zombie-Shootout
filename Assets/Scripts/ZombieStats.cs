@@ -23,7 +23,7 @@ public class ZombieStats : CharacterStats
         isDead = false;
         damage = 2;
         attackSpeed = 2f;
-        zombiePointPerKill = 50;
+        zombiePointPerKill = 100;
     }
 
     //This function is called in the Zombie controller, it takes the player's CharacterStats and deals damage to the player's health. 

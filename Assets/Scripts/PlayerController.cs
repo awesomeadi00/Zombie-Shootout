@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private PlayerStats playerStats;
-    private AudioSource walkingAudio;
+    private AudioSource playerAudio;
+    [SerializeField] private AudioClip jumpSound;
 
     //Start is called before the first frame update
     private void Start()
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
-        walkingAudio = GetComponent<AudioSource>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     //Update is called to get the Player's Input:
@@ -73,10 +74,10 @@ public class PlayerController : MonoBehaviour
         else {isRunning = false; }
 
         //This checks if the player is moving at all and is on the ground, then play the walking audio track. 
-        if((horizontalInput > 0 || verticalInput > 0) && isOnGround && walkingAudio.isPlaying == false) {
-            walkingAudio.volume = Random.Range(0.8f, 1);
-            walkingAudio.pitch = Random.Range(0.8f, 1.1f);
-            walkingAudio.Play();
+        if((horizontalInput > 0 || verticalInput > 0) && isOnGround && playerAudio.isPlaying == false) {
+            playerAudio.volume = Random.Range(0.8f, 1);
+            playerAudio.pitch = Random.Range(0.8f, 1.1f);
+            playerAudio.Play();
         }
 
         if(Input.GetMouseButton(0) && playerStats.hasAmmoinMagazine) {WeaponShootingAnimation(); }    //If the mouse is held down then play the weapon shooting animation. 
@@ -140,6 +141,7 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         playerAnim.SetTrigger("Jump_trig");
+        playerAudio.PlayOneShot(jumpSound, 0.25f);
     }
 
     //If the player dies, then they won't be able to move and 

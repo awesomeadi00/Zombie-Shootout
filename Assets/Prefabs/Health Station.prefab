@@ -56,6 +56,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 531430084373600739}
     m_Modifications:
+    - target: {fileID: 5084502324413915525, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
+      propertyPath: collectSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 67357478fa899460198f84822b54cc8d, type: 3}
     - target: {fileID: 8833196520733147040, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
       propertyPath: m_Name
       value: Health Station Collider
@@ -65,16 +69,24 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.28
+      propertyPath: m_LocalScale.x
+      value: 2.6738007
       objectReference: {fileID: 0}
     - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
-      propertyPath: m_LocalPosition.y
+      propertyPath: m_LocalScale.z
+      value: 2.5067616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
+      propertyPath: m_LocalPosition.x
       value: -0.43
       objectReference: {fileID: 0}
     - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.501
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.92
+      value: -2.72
       objectReference: {fileID: 0}
     - target: {fileID: 8833196520733147044, guid: 03fec5e6fdb214185a5c3d0af9e443a4, type: 3}
       propertyPath: m_LocalRotation.w

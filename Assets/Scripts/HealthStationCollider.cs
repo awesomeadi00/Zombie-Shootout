@@ -15,10 +15,13 @@ public class HealthStationCollider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI notAvailableText;
     [SerializeField] private TextMeshProUGUI healthFullText;
     private int healthStationPoints = 20;
+    [SerializeField] private AudioClip collectSound;
+    private AudioSource playerAudio;
 
     //Start is called before the first frame update
     void Start() {
         InitializeStationGameObjects(); 
+        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();   
     }
 
     private void InitializeStationGameObjects() {
@@ -42,6 +45,7 @@ public class HealthStationCollider : MonoBehaviour
                 else {
                     colliderTextPopUp.gameObject.SetActive(true);
                     if(Input.GetKeyDown(KeyCode.C)) {
+                        playerAudio.PlayOneShot(collectSound, 1.0f);
                         colliderTextPopUp.gameObject.SetActive(false);
                         playerStats.Heal(healthStationPoints);
                         itemPerk.gameObject.SetActive(false);
