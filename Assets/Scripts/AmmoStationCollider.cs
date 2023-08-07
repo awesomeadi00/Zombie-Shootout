@@ -33,9 +33,10 @@ public class AmmoStationCollider : MonoBehaviour
             //If the item is available print out "press 'c' to get perk" 
             if(isAvailable) {   
                 colliderTextPopUp.gameObject.SetActive(true);
+                //If pressed 'c', it will restock ammo into the player's stored ammo section. 
                 if(Input.GetKeyDown(KeyCode.C)) {
                     colliderTextPopUp.gameObject.SetActive(false);
-                    Debug.Log("Ammo Gained");       //Will add this function feature to the player once we work on the ammo values for the gun.  
+                    RestockAmmo();
                     itemPerk.gameObject.SetActive(false);
                     isAvailable = false;
                     StartCoroutine(WaitTillSpawnsBack());
@@ -62,5 +63,9 @@ public class AmmoStationCollider : MonoBehaviour
         yield return new WaitForSeconds(120);
         isAvailable = true;
         itemPerk.gameObject.SetActive(true);
+    }
+
+    private void RestockAmmo() {
+        playerStats.storedAmmo += 100;
     }
 }

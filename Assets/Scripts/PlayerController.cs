@@ -79,8 +79,8 @@ public class PlayerController : MonoBehaviour
             walkingAudio.Play();
         }
 
-        if(Input.GetMouseButton(0)) {WeaponShootingAnimation(); }    //If the mouse is held down then play the weapon shooting animation. 
-        if(Input.GetKeyDown(KeyCode.R)) {WeaponReloadAnimation(); }  //If the user presses 'R', then play the reload animation. 
+        if(Input.GetMouseButton(0) && playerStats.hasAmmoinMagazine) {WeaponShootingAnimation(); }    //If the mouse is held down then play the weapon shooting animation. 
+        if(Input.GetKeyDown(KeyCode.R)) {WeaponReloadAnimation(); }                                   //If the user presses 'R', then play the reload animation. 
     }
 
     //Player moves forward/backwards and left/right depending on speed and input value. 

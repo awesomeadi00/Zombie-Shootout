@@ -29,6 +29,8 @@ public class PerkStationCollider :  MonoBehaviour
         armourValueText.text = "+" + playerStats.armourEndurance.ToString();
         staminaValueText.text = "+" + playerStats.staminaEndurance.ToString();
         damageValueText.text = "+" + playerStats.damageBoost.ToString();
+
+        playerStats.pointMultiplier = Mathf.Round(playerStats.pointMultiplier * 100.0f) * 0.01f;    //Simply keeps it strictly to 2dp. 
         pointValueText.text = "x" + playerStats.pointMultiplier.ToString();
     }
 
@@ -72,7 +74,7 @@ public class PerkStationCollider :  MonoBehaviour
                     else if(gameObject.tag == "Point Collider") {
                         playerStats.pointMultiplier += 0.2f;
                         playerStats.playerPoints -= pointMultPoints;
-                        Debug.Log("Points Multiplied");
+                        Debug.Log(playerStats.pointMultiplier); 
                     }
                 }
             }

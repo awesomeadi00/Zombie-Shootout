@@ -16,6 +16,7 @@ public class PlayerStats : CharacterStats
     public Slider healthBar;
     public Slider staminaBar;
     public TextMeshProUGUI playerPointsText;
+    public TextMeshProUGUI ammoText;
 
     //Player Stats Values: 
     public float playerPoints;
@@ -26,21 +27,26 @@ public class PlayerStats : CharacterStats
     private float currentStamina;
     private float inflictingDamage;
     public bool outOfStamina = false;
+    public float ammoMagazineSize;
+    public float storedAmmo;
+    public float currentAmmoinMagazine;
+    public bool hasAmmoinMagazine;
 
     void Start() {
         zombieStats = zombiePrefab.gameObject.GetComponent<ZombieStats>();
         InitializeVariables();
     }  
 
-    //This simply updates the player's points on the screen at all times. 
+    //This simply updates the player's points and ammo on the screen at all times. 
     void Update() {
         playerPointsText.text = playerPoints.ToString();
+        ammoText.text = currentAmmoinMagazine.ToString() + " | " + storedAmmo.ToString();
     }
 
     public override void InitializeVariables()
     {
         base.InitializeVariables();     //1) Player Health set to 100
-        playerPoints = 0;               //2) Player Points set to 0
+        playerPoints = 50000;           //2) Player Points set to 0
         inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
 
         //All perk values set to default.
@@ -53,6 +59,12 @@ public class PlayerStats : CharacterStats
         currentStamina = maxBarValue;
         staminaBar.value = maxBarValue;
         healthBar.value = maxBarValue;
+
+        //Ammo values set: 
+        ammoMagazineSize = 40; 
+        currentAmmoinMagazine = ammoMagazineSize;
+        storedAmmo = 160;
+        hasAmmoinMagazine = true;
     }
 
     //When the player runs, then the stamina bar will deplete faster. If it reaches close to 0, then they cannot run: out of stamina. 
