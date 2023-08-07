@@ -20,7 +20,7 @@ public class ZombieStats : CharacterStats
         maxHealth = 50;
         SetHealth(maxHealth);
         isDead = false;
-        damage = 15;
+        damage = 2;
         attackSpeed = 2f;
         zombiePointPerKill = 100;
     }

@@ -70,7 +70,7 @@ public class PerkStationCollider :  MonoBehaviour
                     }
 
                     else if(gameObject.tag == "Damage Collider") {
-                        playerStats.damageBoost += 1;
+                        playerStats.damageBoost += 0.5f;
                         playerStats.playerPoints -= damagePoints;
                     }
 

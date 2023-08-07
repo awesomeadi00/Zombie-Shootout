@@ -95,8 +95,7 @@ public class ZombieSpawnManager : MonoBehaviour
             enemiesToSpawn = Mathf.FloorToInt(Mathf.Min(((0.09f * Mathf.Pow(waveNumber, 2)) - (0.0029f * waveNumber) + 23.9850f), 100));
             //If the player manages to reach the higher rounds with a cap of 100, then it will begin to increase the zombies damage to the player 
             if(enemiesToSpawn == 100) {
-                zombieStats.damage++;
-                //Increase health and speed.  
+                zombieStats.damage += 2; 
             }
             StartCoroutine(SpawnerInstantiation(enemiesToSpawn, waveNumber));
         }

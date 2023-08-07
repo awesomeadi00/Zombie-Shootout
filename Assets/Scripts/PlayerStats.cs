@@ -47,7 +47,7 @@ public class PlayerStats : CharacterStats
     {
         base.InitializeVariables();     //1) Player Health set to 100
         playerPoints = 0;               //2) Player Points set to 0
-        inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
+        inflictingDamage = 5;           //3) Player can damage zombies 5hp per hit
 
         //All perk values set to default.
         staminaEndurance = 0;
