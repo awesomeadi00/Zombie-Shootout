@@ -27,15 +27,17 @@ public class WeaponShooting : MonoBehaviour
     }
 
     void Update()
-    {
-        if(Input.GetKey(KeyCode.Mouse0)) {
-            Shoot();
-        }
+    {   
+        if(playerStats.DeathStatus() == false) {
+            if(Input.GetKey(KeyCode.Mouse0)) {
+                Shoot();
+            }
 
-        if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
-            gunAudio.PlayOneShot(gunReloadSound, 1.34f);
-            StartCoroutine(Reloading());
-        }        
+            if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
+                gunAudio.PlayOneShot(gunReloadSound, 1.34f);
+                StartCoroutine(Reloading());
+            }     
+        }   
     }
 
     //This will cast a ray and shoot it towards the center of the screen depending on the weapon's range which is 20m

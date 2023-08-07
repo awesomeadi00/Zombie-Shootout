@@ -46,7 +46,7 @@ public class PlayerStats : CharacterStats
     public override void InitializeVariables()
     {
         base.InitializeVariables();     //1) Player Health set to 100
-        playerPoints = 100000;           //2) Player Points set to 0
+        playerPoints = 0;               //2) Player Points set to 0
         inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
 
         //All perk values set to default.

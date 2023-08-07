@@ -25,6 +25,7 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private Slider volSlider;
     [SerializeField] private Slider pageSlider;
+    [SerializeField] private GameObject[] instructionPages;
 
     //Variable to check which screen the user is on, 0 = title screen, 1 = instruction screen
     private int gameScreen;
@@ -70,4 +71,35 @@ public class MenuUIHandler : MonoBehaviour
             gameScreen = 0;
         }
     }   
+
+    public void InstructionPages() {
+        if(pageSlider.value == 1) {
+            instructionPages[0].SetActive(true);
+            instructionPages[1].SetActive(false);
+            instructionPages[2].SetActive(false);
+            instructionPages[3].SetActive(false);
+        }
+
+        if(pageSlider.value == 2) {
+            instructionPages[0].SetActive(false);
+            instructionPages[1].SetActive(true);
+            instructionPages[2].SetActive(false);
+            instructionPages[3].SetActive(false);
+        }
+
+        if(pageSlider.value == 3) {
+            instructionPages[0].SetActive(false);
+            instructionPages[1].SetActive(false);
+            instructionPages[2].SetActive(true);
+            instructionPages[3].SetActive(false);
+        }
+
+        if(pageSlider.value == 4) {
+            instructionPages[0].SetActive(false);
+            instructionPages[1].SetActive(false);
+            instructionPages[2].SetActive(false);
+            instructionPages[3].SetActive(true);
+        }
+    }
+
 }
