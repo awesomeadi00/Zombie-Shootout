@@ -74,7 +74,7 @@ public class PerkStationCollider :  MonoBehaviour
                     else if(gameObject.tag == "Point Collider") {
                         playerStats.pointMultiplier += 0.2f;
                         playerStats.playerPoints -= pointMultPoints;
-                        Debug.Log(playerStats.pointMultiplier); 
+                        Debug.Log("Points Multiplied");
                     }
                 }
             }

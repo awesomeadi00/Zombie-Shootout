@@ -69,7 +69,7 @@ public class PlayerStats : CharacterStats
 
     //When the player runs, then the stamina bar will deplete faster. If it reaches close to 0, then they cannot run: out of stamina. 
     public void RunningStaminaDrain() {
-        // currentStamina -= (20 + CalculateStaminaEndurance()) * Time.deltaTime;       //This is not working so please fix. 
+        currentStamina -= (20 + CalculateStaminaEndurance()) * Time.deltaTime;       //This is not working so please fix. 
         currentStamina -= 20 * Time.deltaTime;
         if(currentStamina < barMargin) {
             outOfStamina = true; 
@@ -95,6 +95,7 @@ public class PlayerStats : CharacterStats
     //This funciton has a smooth exponential curve with an asymptote at 20, meaning the player will never actually counter its stamina's decay rate. 
     public float CalculateStaminaEndurance() {
         float staminaEnduranceToBeAdded = Mathf.Pow(-0.99f, (staminaEndurance + (Mathf.Log(20)/Mathf.Log(0.99f)))) + 20;
+        Debug.Log(staminaEnduranceToBeAdded);
         return staminaEnduranceToBeAdded;
     }
 
@@ -104,6 +105,7 @@ public class PlayerStats : CharacterStats
     //As the zombie's damage changes in the later rounds, so does the armour endurance function as well. 
     public float CalculateArmourEndurance() {
         float armourEnduranceFunction = Mathf.Pow(-0.9f, armourEndurance) + 1;
+        Debug.Log(armourEnduranceFunction);
         return (armourEnduranceFunction * zombieStats.damage);
     }
 
