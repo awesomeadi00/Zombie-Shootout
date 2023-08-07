@@ -5,7 +5,6 @@ using UnityEngine;
 public class ZombieStats : CharacterStats
 {
     private PlayerStats playerStats;
-    [SerializeField] ParticleSystem deathParticle;
     [SerializeField] public float damage;         //1) Zombie has a damage value that they inflict on the player. 
     public float attackSpeed;                     //2) Zombie has a speed at which they attack the player. 
     public float zombiePointPerKill;              //3) Zombie has a point value that the player receives when they kill them.
@@ -21,7 +20,7 @@ public class ZombieStats : CharacterStats
         maxHealth = 50;
         SetHealth(maxHealth);
         isDead = false;
-        damage = 2;
+        damage = 15;
         attackSpeed = 2f;
         zombiePointPerKill = 100;
     }
@@ -29,18 +28,21 @@ public class ZombieStats : CharacterStats
     //This function is called in the Zombie controller, it takes the player's CharacterStats and deals damage to the player's health. 
     //This function will also take into the armour endurance on the player as well. 
     public void dealDamage(CharacterStats statsToDamage) {
-        // statsToDamage.TakeDamage(damage - playerStats.CalculateArmourEndurance());           //Not working please fix this. 
-        statsToDamage.TakeDamage(damage);
+        statsToDamage.TakeDamage(damage * (1 - playerStats.CalculateArmourEndurance()));         
+    }
+
+    //A getter function to check whether the zombie is dead or not. 
+    public bool ZombieDeathStatus() {
+        return isDead;
     }
 
     //For a zombie, when their health goes to 0, we set the object as false from the scene and add the points to the player's overall points. 
     public override void Die()
     {
         base.Die();
-        
+        Vector3 deathPosition = transform.position;
         //When the zombie dies, add the points to the player. 
         playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; 
-        // deathParticle.Play();       //Not working...
         gameObject.SetActive(false);
     }
 }

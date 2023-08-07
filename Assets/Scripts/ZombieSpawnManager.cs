@@ -96,6 +96,7 @@ public class ZombieSpawnManager : MonoBehaviour
             //If the player manages to reach the higher rounds with a cap of 100, then it will begin to increase the zombies damage to the player 
             if(enemiesToSpawn == 100) {
                 zombieStats.damage++;
+                //Increase health and speed.  
             }
             StartCoroutine(SpawnerInstantiation(enemiesToSpawn, waveNumber));
         }

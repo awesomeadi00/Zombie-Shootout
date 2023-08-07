@@ -34,8 +34,8 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
-        //If the zombie is not idle anymore, then he can start moving. 
-        if(!isIdle) {
+        //If the zombie is not idle anymore and is alive, then he can start moving. 
+        if(!isIdle && zombieStats.ZombieDeathStatus() == false) {
             MoveZombie();
         }
 

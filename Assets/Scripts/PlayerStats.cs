@@ -46,7 +46,7 @@ public class PlayerStats : CharacterStats
     public override void InitializeVariables()
     {
         base.InitializeVariables();     //1) Player Health set to 100
-        playerPoints = 50000;           //2) Player Points set to 0
+        playerPoints = 100000;           //2) Player Points set to 0
         inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
 
         //All perk values set to default.
@@ -69,8 +69,7 @@ public class PlayerStats : CharacterStats
 
     //When the player runs, then the stamina bar will deplete faster. If it reaches close to 0, then they cannot run: out of stamina. 
     public void RunningStaminaDrain() {
-        // currentStamina -= (20 + CalculateStaminaEndurance()) * Time.deltaTime;       //This is not working so please fix. 
-        currentStamina -= 20 * Time.deltaTime;
+        currentStamina -= (20 - CalculateStaminaEndurance()) * Time.deltaTime; 
         if(currentStamina < barMargin) {
             outOfStamina = true; 
         }
@@ -94,8 +93,8 @@ public class PlayerStats : CharacterStats
     //This is because decay rate of player's stamina is 20points, hence the max cutoff should be at 20.
     //This funciton has a smooth exponential curve with an asymptote at 20, meaning the player will never actually counter its stamina's decay rate. 
     public float CalculateStaminaEndurance() {
-        float staminaEnduranceToBeAdded = Mathf.Pow(-0.99f, (staminaEndurance + (Mathf.Log(20)/Mathf.Log(0.99f)))) + 20;
-        Debug.Log(staminaEnduranceToBeAdded);
+        float staminaEnduranceToBeAdded = (-1 * Mathf.Pow(0.97f, staminaEndurance + (Mathf.Log(20)/Mathf.Log(0.97f)))) + 20;
+        staminaEnduranceToBeAdded = Mathf.Round(staminaEnduranceToBeAdded * 100.0f) * 0.01f;    //Rounds to 2dp
         return staminaEnduranceToBeAdded;
     }
 
@@ -104,9 +103,8 @@ public class PlayerStats : CharacterStats
     //The important thing to note is that the player armour reduction can never equate to a zombie's damage as then the player would not get hurt = game is too easy.
     //As the zombie's damage changes in the later rounds, so does the armour endurance function as well. 
     public float CalculateArmourEndurance() {
-        float armourEnduranceFunction = Mathf.Pow(-0.9f, armourEndurance) + 1;
-        Debug.Log(armourEnduranceFunction);
-        return (armourEnduranceFunction * zombieStats.damage);
+        float armourEnduranceFunction = (-1 * Mathf.Pow(0.9f, armourEndurance)) + 1;
+        return (armourEnduranceFunction);
     }
 
     //This function will damage the zombie depending on the gun damage.  
