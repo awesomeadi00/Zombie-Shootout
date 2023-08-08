@@ -8,6 +8,7 @@ public class MainManager : MonoBehaviour
 
     //Variables to pass through the menu scene: 
     public float volumeValue;
+    public float mouseSensValue;
 
     void Awake(){
         if(Instance != null) {

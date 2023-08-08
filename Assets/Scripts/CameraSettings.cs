@@ -8,8 +8,8 @@ public class CameraSettings : MonoBehaviour
     private PlayerStats playerStats;
     private bool cameraDeathGate = true;
     [SerializeField] Vector3 offset = new Vector3(0, 3.4f, 0);
-    [SerializeField] private float mouseSensX;
-    [SerializeField] private float mouseSensY;
+    private float mouseSensX;
+    private float mouseSensY;
     private float xRotationVal;
     private float yRotationVal;
     private float mouseX;
@@ -20,6 +20,8 @@ public class CameraSettings : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         playerStats = playerObject.GetComponent<PlayerStats>();
+        mouseSensX = MainManager.Instance.mouseSensValue;
+        mouseSensY = MainManager.Instance.mouseSensValue;
     }
 
     private void Update() {
