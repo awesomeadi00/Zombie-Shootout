@@ -30,6 +30,11 @@ public class CharacterStats : MonoBehaviour
         isDead = true;
     }
 
+    //This function declares the entity as alive. 
+    public void Alive() {
+        isDead = false;
+    }
+
     //This function takes a value and sets it as the entities health
     public void SetHealth(float healthValueToSet) {
         health = healthValueToSet;

@@ -110,6 +110,8 @@ public class ZombieSpawnManager : MonoBehaviour
             GameObject zombiePrefab = ObjectPooler.SharedInstance.GetPooledObject();
             if (zombiePrefab != null)
             {
+                CharacterStats zombieInstance = zombiePrefab.GetComponent<CharacterStats>();
+                zombieInstance.Alive();
                 zombiePrefab.SetActive(true);                                   //Activate in hierarchy
                 zombiePrefab.transform.position = GenerateSpawnPosition();      //Position it at spawn position
             }
