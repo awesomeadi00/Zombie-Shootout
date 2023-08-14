@@ -31,7 +31,8 @@ public class CharacterStats : MonoBehaviour
     }
 
     //This function declares the entity as alive. 
-    public void Alive() {
+    public void ReInitialize() {
+        health = maxHealth;
         isDead = false;
     }
 
