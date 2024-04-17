@@ -620,6 +620,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1925848949}
     - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: shieldBar
+      value: 
+      objectReference: {fileID: 725387300}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 1694275416}

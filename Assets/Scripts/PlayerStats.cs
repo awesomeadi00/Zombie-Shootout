@@ -15,6 +15,8 @@ public class PlayerStats : CharacterStats
     private float barMargin = 0.1f;
     public Slider healthBar;
     public Slider staminaBar;
+    public Slider shieldBar;
+    public Image staminaBarFill;  
     public TextMeshProUGUI playerPointsText;
     public TextMeshProUGUI ammoText;
 
@@ -26,10 +28,12 @@ public class PlayerStats : CharacterStats
     public float pointMultiplier;
     private float currentStamina;
     private float inflictingDamage;
-    public bool outOfStamina = false;
     public float ammoMagazineSize;
     public float storedAmmo;
     public float currentAmmoinMagazine;
+
+    public bool outOfStamina = false;
+    public bool outOfShields = false;
     public bool hasAmmoinMagazine;
 
     void Start() {
@@ -59,6 +63,7 @@ public class PlayerStats : CharacterStats
         currentStamina = maxBarValue;
         staminaBar.value = maxBarValue;
         healthBar.value = maxBarValue;
+        shieldBar.value = maxBarValue;
 
         //Ammo values set: 
         ammoMagazineSize = 40; 
@@ -71,7 +76,8 @@ public class PlayerStats : CharacterStats
     public void RunningStaminaDrain() {
         currentStamina -= (20 - CalculateStaminaEndurance()) * Time.deltaTime; 
         if(currentStamina < barMargin) {
-            outOfStamina = true; 
+            outOfStamina = true;
+            StartCoroutine(FlashStaminaBar());
         }
     }
 
@@ -81,6 +87,8 @@ public class PlayerStats : CharacterStats
         if(currentStamina > maxBarValue - barMargin) {
             currentStamina = maxBarValue;
             outOfStamina = false;
+            StopCoroutine(FlashStaminaBar());
+            staminaBarFill.color = new Color(0.01f, 0.78f, 0.11f);
         }
     }
 
@@ -135,4 +143,19 @@ public class PlayerStats : CharacterStats
     public float ReturnHealth() {
         return health;
     }
- }
+
+    IEnumerator FlashStaminaBar()
+    {
+        bool toggle = false;
+        Color darkForestGreen = new Color(0.01f, 0.78f, 0.11f);  
+        Color lightGreen = new Color(0.65f, 0.95f, 0.65f);         
+        while (outOfStamina)
+        {
+            staminaBarFill.color = toggle ? darkForestGreen : lightGreen; 
+            toggle = !toggle;
+            yield return new WaitForSeconds(0.5f); 
+        }
+        staminaBarFill.color = darkForestGreen; 
+    }
+
+}
