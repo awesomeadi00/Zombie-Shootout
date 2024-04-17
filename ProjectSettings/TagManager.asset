@@ -13,6 +13,8 @@ TagManager:
   - Stamina Collider
   - Damage Collider
   - Point Collider
+  - Fire
+  - Structure
   layers:
   - Default
   - TransparentFX

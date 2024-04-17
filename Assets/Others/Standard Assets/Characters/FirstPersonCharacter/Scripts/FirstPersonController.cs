@@ -25,9 +25,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
         [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
         [SerializeField] private float m_StepInterval;
-        [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private AudioClip[] m_GrassFootstepSounds;    
+        [SerializeField] private AudioClip[] m_StructureFootstepSounds;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -43,6 +44,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         private PlayerStats m_playerStats;
+
+        private enum TerrainTags {
+            Structure, 
+            Ground
+        }
 
         // Use this for initialization
         private void Start()
@@ -177,15 +183,33 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            // pick & play a random footstep sound from the array,
-            // excluding sound at index 0
-            int n = Random.Range(1, m_FootstepSounds.Length);
-            m_AudioSource.clip = m_FootstepSounds[n];
+
+            // Determine which array to use based on the surface tag
+            AudioClip[] selectedArray = m_GrassFootstepSounds;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                if (hit.collider.CompareTag("Structure"))
+                {
+                    selectedArray = m_StructureFootstepSounds;
+                }
+                else if (hit.collider.CompareTag("Ground"))
+                {
+                    selectedArray = m_GrassFootstepSounds;
+                }
+            }
+
+            // pick & play a random footstep sound from the selected array,
+            int n = Random.Range(1, selectedArray.Length);
+            m_AudioSource.clip = selectedArray[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
             // move picked sound to index 0 so it's not picked next time
-            m_FootstepSounds[n] = m_FootstepSounds[0];
-            m_FootstepSounds[0] = m_AudioSource.clip;
+            selectedArray[n] = selectedArray[0];
+            selectedArray[0] = m_AudioSource.clip;
         }
+
+
+
 
 
         private void UpdateCameraPosition(float speed)

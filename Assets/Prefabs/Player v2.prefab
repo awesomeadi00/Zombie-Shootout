@@ -59,7 +59,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
@@ -183,7 +183,9 @@ MonoBehaviour:
     BobDuration: 0.2
     BobAmount: 0.1
   m_StepInterval: 3.5
-  m_FootstepSounds:
+  m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
+  m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  m_GrassFootstepSounds:
   - {fileID: 8300000, guid: dadb89c3e2dd441ce8cf006a8208f980, type: 3}
   - {fileID: 8300000, guid: e312aa55cf70e459c8b6314786ccbb49, type: 3}
   - {fileID: 8300000, guid: 75f0f28450a1648e8b74fc5f5dc063f7, type: 3}
@@ -191,8 +193,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cd2929662e9694d54aced7fff8f6ee4b, type: 3}
   - {fileID: 8300000, guid: 320d4d633230a40a8aa6c634bf30a95b, type: 3}
   - {fileID: 8300000, guid: 4bfac60e371634bf8b3c45d08c139971, type: 3}
-  m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
-  m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  m_StructureFootstepSounds:
+  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
+  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 8300000, guid: 5a9383dda6cabc047b7a297602e93eb4, type: 3}
+  - {fileID: 8300000, guid: e9714160ce34f2b4ab63ff8c27bd68e1, type: 3}
 --- !u!54 &2870809373146229666
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,7 +237,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0
