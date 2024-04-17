@@ -12,18 +12,19 @@ public class WeaponShooting : MonoBehaviour
     [SerializeField] private GameObject Zombie;
     private CharacterStats zombieStats;
 
+    [Header("Weapon Information:")]
     private bool reloadingCompleted = true;
     private PlayerStats playerStats;
     private AudioSource gunAudio;
-    private float weaponRange = 20;
+    public float weaponRange = 20;
     private float lastShootTime = 0;
-    private float fireRate = 0.07f;
+    public float fireRate = 0.1f;
     
     
     void Start() {
         playerStats = GetComponent<PlayerStats>();
         gunAudio = GetComponent<AudioSource>();
-        mainCam = GameObject.Find("PlayerCamera").GetComponent<Camera>();
+        mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
     }
 
     void Update()
