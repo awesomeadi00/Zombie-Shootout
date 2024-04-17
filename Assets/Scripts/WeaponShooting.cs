@@ -6,38 +6,46 @@ public class WeaponShooting : MonoBehaviour
 {  
 
     private Camera mainCam;
-    [SerializeField] private ParticleSystem gunShotEffect;
-    [SerializeField] private AudioClip gunShotSound;
-    [SerializeField] private AudioClip gunReloadSound;
     [SerializeField] private GameObject Zombie;
     private CharacterStats zombieStats;
 
-    [Header("Weapon Information:")]
     private bool reloadingCompleted = true;
     private PlayerStats playerStats;
-    private AudioSource gunAudio;
-    public float weaponRange = 20;
+    private float weaponRange = 20;
     private float lastShootTime = 0;
-    public float fireRate = 0.1f;
-    
-    
+
+    public GameObject rifle;
+    public GameObject pistol;
+    public GameObject currentWeapon;
+    private WeaponController currentWeaponController;
+
+
+
     void Start() {
         playerStats = GetComponent<PlayerStats>();
-        gunAudio = GetComponent<AudioSource>();
         mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
+        EquipRifle();
+        currentWeapon = rifle;
     }
 
     void Update()
     {   
         if(playerStats.DeathStatus() == false) {
-            if(Input.GetKey(KeyCode.Mouse0)) {
+            currentWeaponController = currentWeapon.GetComponent<WeaponController>();
+
+            if (Input.GetKey(KeyCode.Mouse0)) {
                 Shoot();
             }
 
             if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
-                gunAudio.PlayOneShot(gunReloadSound, 1.34f);
+                currentWeaponController.ReloadSound();
                 StartCoroutine(Reloading());
-            }     
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                SwapWeapon();
+            }
         }   
     }
 
@@ -47,9 +55,9 @@ public class WeaponShooting : MonoBehaviour
         RaycastHit hit;
 
         //This checks if the particle system is not playing then play it, else stop it. 
-        if(!gunShotEffect.isPlaying && gunShotEffect!= null) {gunShotEffect.Play(); }
-        else if(gunShotEffect.isPlaying && gunShotEffect != null) {gunShotEffect.Stop(); }
-        gunAudio.PlayOneShot(gunShotSound, 0.07f);
+        if(!currentWeaponController.GunParticlePlayingBool() && !currentWeaponController.GunParticleExists()) {currentWeaponController.GunParticlePlay(); }
+        else if(currentWeaponController.GunParticlePlayingBool() && !currentWeaponController.GunParticleExists()) {currentWeaponController.GunParticleStop(); }
+        currentWeaponController.GunShotSound();
 
         //If there is no ammo in the magazine currently, then make the bool false. 
         if(playerStats.currentAmmoinMagazine == 0) {
@@ -72,12 +80,38 @@ public class WeaponShooting : MonoBehaviour
 
     //This function will call the RaycastShoot() every moment depending on the fireRate. 
     private void Shoot() {
-        if(Time.time > lastShootTime + fireRate) {
+        if(Time.time > lastShootTime + currentWeaponController.fireRate) {
             lastShootTime = Time.time;
             if(playerStats.hasAmmoinMagazine) {
                 RaycastShoot();
             }
         }
+    }
+
+    void SwapWeapon()
+    {
+        if (currentWeapon == rifle)
+        {
+            EquipPistol();
+        }
+        else if (currentWeapon == pistol)
+        {
+            EquipRifle();
+        }
+    }
+
+    void EquipRifle()
+    {
+        rifle.SetActive(true);
+        pistol.SetActive(false);
+        currentWeapon = rifle;
+    }
+
+    void EquipPistol()
+    {
+        rifle.SetActive(false);
+        pistol.SetActive(true);
+        currentWeapon = pistol;
     }
 
     //Just a delay for the reloading sound effect so that you cannot execute it multiple times. 

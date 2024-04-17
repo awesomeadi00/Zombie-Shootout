@@ -148,7 +148,7 @@ public class PlayerStats : CharacterStats
     {
         bool toggle = false;
         Color darkForestGreen = new Color(0.01f, 0.78f, 0.11f);  
-        Color lightGreen = new Color(0.65f, 0.95f, 0.65f);         
+        Color lightGreen = new Color(0.65f, 0.95f, 0.2f);         
         while (outOfStamina)
         {
             staminaBarFill.color = toggle ? darkForestGreen : lightGreen; 
