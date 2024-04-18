@@ -5,12 +5,16 @@ using UnityEngine;
 public class ZombieStats : CharacterStats
 {
     private PlayerStats playerStats;
+    private Animator zombieAnim;
+    [SerializeField] private ParticleSystem zombieBlood;
     [SerializeField] public float damage;         //1) Zombie has a damage value that they inflict on the player. 
     public float attackSpeed;                     //2) Zombie has a speed at which they attack the player. 
     public float zombiePointPerKill;              //3) Zombie has a point value that the player receives when they kill them.
+    private bool deathGate = true;
 
     private void Start() {
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+        zombieAnim = GetComponent<Animator>();
         InitializeVariables();
     }
 
@@ -40,9 +44,27 @@ public class ZombieStats : CharacterStats
     public override void Die()
     {
         base.Die();
-        Vector3 deathPosition = transform.position;
-        //When the zombie dies, add the points to the player. 
-        playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; 
+
+        // Only enter here once. 
+        if(deathGate) {
+            deathGate = false;
+            //When the zombie dies, add the points to the player. 
+            playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; 
+        }
+
+        zombieAnim.SetBool("Death_b", true);
+        zombieAnim.SetTrigger("Death");
+
+        StartCoroutine(WaitToDespawn());
+
+    }
+
+    IEnumerator WaitToDespawn() {
+        yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
+    }
+
+    public void SpillBlood() {
+        zombieBlood.Play();
     }
 }

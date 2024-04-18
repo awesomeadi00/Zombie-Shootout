@@ -8,6 +8,7 @@ public class WeaponShooting : MonoBehaviour
     private Camera mainCam;
     [SerializeField] private GameObject Zombie;
     private CharacterStats zombieStats;
+    private ZombieStats blood;
 
     private bool reloadingCompleted = true;
     private PlayerStats playerStats;
@@ -37,18 +38,6 @@ public class WeaponShooting : MonoBehaviour
             if (Input.GetKey(KeyCode.Mouse0)) {
                 Shoot();
             }
-
-            // else {
-            //     if (currentWeapon == rifle)
-            //     {
-            //         weaponAnimatorController.SetBool("rifle_shoot", false);
-            //     }
-
-            //     else
-            //     {
-            //         weaponAnimatorController.SetBool("pistol_shoot", false);
-            //     }
-            // }
 
             if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
                 // weaponAnimatorController.SetTrigger("reload");
@@ -87,6 +76,8 @@ public class WeaponShooting : MonoBehaviour
         if(Physics.Raycast(ray, out hit, weaponRange)) {
             if(hit.transform.CompareTag("Zombie")) {
                 zombieStats = hit.transform.GetComponent<CharacterStats>();
+                blood = hit.transform.GetComponent<ZombieStats>();
+                blood.SpillBlood();
                 playerStats.DamageZombie(zombieStats);
             }
         }
@@ -97,14 +88,6 @@ public class WeaponShooting : MonoBehaviour
         if(Time.time > lastShootTime + currentWeaponController.fireRate) {
             lastShootTime = Time.time;
             if(playerStats.hasAmmoinMagazine) {
-                // if(currentWeapon == rifle) {
-                //     weaponAnimatorController.SetBool("rifle_shoot", true);
-                // }
-
-                // else {
-                //     weaponAnimatorController.SetBool("pistol_shoot", true);
-                // }
-
                 RaycastShoot();
             }
         }
@@ -134,6 +117,10 @@ public class WeaponShooting : MonoBehaviour
         rifle.SetActive(false);
         pistol.SetActive(true);
         currentWeapon = pistol;
+    }
+
+    public bool RifleActive() {
+        return currentWeapon == rifle;
     }
 
     //Just a delay for the reloading sound effect so that you cannot execute it multiple times. 

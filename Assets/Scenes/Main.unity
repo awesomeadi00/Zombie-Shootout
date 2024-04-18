@@ -8772,6 +8772,10 @@ PrefabInstance:
       propertyPath: playerPointsText
       value: 
       objectReference: {fileID: 432259390}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: damageTakenMultipler
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7607936617215612343, guid: 833f843a391214b399fced46670bdf94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.479

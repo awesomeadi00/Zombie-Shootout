@@ -22,6 +22,7 @@ public class PlayerStats : CharacterStats
     public Image staminaBarFill;  
     public TextMeshProUGUI playerPointsText;
     public TextMeshProUGUI ammoText;
+    private WeaponShooting weaponSelected;
 
     //Player Stats Values: 
     [Header("Player Perk Values")]
@@ -40,6 +41,8 @@ public class PlayerStats : CharacterStats
     public float storedAmmo;
     public float currentAmmoinMagazine;
     public float shieldsreplenishTimer = 3f;
+    public float rifleDamage = 3f;
+    public float pistolDamage = 7;
 
     [Header("Player Booleans")]
     public bool beingAttacked = false;
@@ -49,6 +52,7 @@ public class PlayerStats : CharacterStats
 
     void Start() {
         zombieStats = zombiePrefab.gameObject.GetComponent<ZombieStats>();
+        weaponSelected = GetComponent<WeaponShooting>();
         InitializeVariables();
     }  
 
@@ -56,6 +60,7 @@ public class PlayerStats : CharacterStats
     void Update() {
         playerPointsText.text = playerPoints.ToString();
         ammoText.text = currentAmmoinMagazine.ToString() + " | " + storedAmmo.ToString();
+        UpdateInflictingDamage();
 
         // Check if being attacked by any zombie
         beingAttacked = CheckIfBeingAttacked();
@@ -75,7 +80,7 @@ public class PlayerStats : CharacterStats
     {
         base.InitializeVariables();     //1) Player Health set to 100
         playerPoints = 0;               //2) Player Points set to 0
-        inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
+        inflictingDamage = 2;           
         damageTakenMultipler = 3f;
 
         //All perk values set to default.
@@ -152,6 +157,16 @@ public class PlayerStats : CharacterStats
     public void DamageZombie(CharacterStats statsToDamage) {
         float overallDamage = inflictingDamage + damageBoost;
         statsToDamage.TakeDamage(overallDamage);
+    }
+
+    public void UpdateInflictingDamage() {
+        if(weaponSelected.RifleActive()) {
+            inflictingDamage = rifleDamage;
+        }
+
+        else {
+            inflictingDamage = pistolDamage;
+        }
     }
 
 
