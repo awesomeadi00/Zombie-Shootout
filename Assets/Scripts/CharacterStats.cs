@@ -43,7 +43,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     //This function takes a value and damages the entities health.
-    public void TakeDamage(float damage) {
+    public virtual void TakeDamage(float damage) {
         float healthAfterDamage = health - damage;
         SetHealth(healthAfterDamage);
     }

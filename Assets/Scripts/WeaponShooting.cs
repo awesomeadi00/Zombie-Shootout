@@ -18,6 +18,7 @@ public class WeaponShooting : MonoBehaviour
     public GameObject pistol;
     public GameObject currentWeapon;
     private WeaponController currentWeaponController;
+    // public Animator weaponAnimatorController;
 
 
 
@@ -37,7 +38,20 @@ public class WeaponShooting : MonoBehaviour
                 Shoot();
             }
 
+            // else {
+            //     if (currentWeapon == rifle)
+            //     {
+            //         weaponAnimatorController.SetBool("rifle_shoot", false);
+            //     }
+
+            //     else
+            //     {
+            //         weaponAnimatorController.SetBool("pistol_shoot", false);
+            //     }
+            // }
+
             if(Input.GetKeyDown(KeyCode.R) && reloadingCompleted) {
+                // weaponAnimatorController.SetTrigger("reload");
                 currentWeaponController.ReloadSound();
                 StartCoroutine(Reloading());
             }
@@ -83,6 +97,14 @@ public class WeaponShooting : MonoBehaviour
         if(Time.time > lastShootTime + currentWeaponController.fireRate) {
             lastShootTime = Time.time;
             if(playerStats.hasAmmoinMagazine) {
+                // if(currentWeapon == rifle) {
+                //     weaponAnimatorController.SetBool("rifle_shoot", true);
+                // }
+
+                // else {
+                //     weaponAnimatorController.SetBool("pistol_shoot", true);
+                // }
+
                 RaycastShoot();
             }
         }

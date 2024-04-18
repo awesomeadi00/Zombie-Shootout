@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Data.Common;
+using System.Linq;
 
 public class PlayerStats : CharacterStats
 {
@@ -11,6 +13,7 @@ public class PlayerStats : CharacterStats
     [SerializeField] GameObject zombiePrefab;
 
     //Player UI Variables: 
+    [Header("Player UI")]
     private float maxBarValue = 100; 
     private float barMargin = 0.1f;
     public Slider healthBar;
@@ -21,17 +24,25 @@ public class PlayerStats : CharacterStats
     public TextMeshProUGUI ammoText;
 
     //Player Stats Values: 
+    [Header("Player Perk Values")]
     public float playerPoints;
     public float staminaEndurance;
     public float armourEndurance;
     public float damageBoost;
     public float pointMultiplier;
+
+    [Header("Player Settings")]
     private float currentStamina;
+    public float currentShield;
+    public float damageTakenMultipler;
     private float inflictingDamage;
     public float ammoMagazineSize;
     public float storedAmmo;
     public float currentAmmoinMagazine;
+    public float shieldsreplenishTimer = 3f;
 
+    [Header("Player Booleans")]
+    public bool beingAttacked = false;
     public bool outOfStamina = false;
     public bool outOfShields = false;
     public bool hasAmmoinMagazine;
@@ -45,6 +56,19 @@ public class PlayerStats : CharacterStats
     void Update() {
         playerPointsText.text = playerPoints.ToString();
         ammoText.text = currentAmmoinMagazine.ToString() + " | " + storedAmmo.ToString();
+
+        // Check if being attacked by any zombie
+        beingAttacked = CheckIfBeingAttacked();
+
+        // Shield replenishment logic
+        if (!beingAttacked)
+        {
+            StartCoroutine(ReplenishShieldsAfterDelay());
+        }
+
+        else {
+            StopAllCoroutines();
+        }
     }
 
     public override void InitializeVariables()
@@ -52,6 +76,7 @@ public class PlayerStats : CharacterStats
         base.InitializeVariables();     //1) Player Health set to 100
         playerPoints = 0;               //2) Player Points set to 0
         inflictingDamage = 2;           //3) Player can damage zombies 2hp per hit
+        damageTakenMultipler = 3f;
 
         //All perk values set to default.
         staminaEndurance = 0;
@@ -59,8 +84,9 @@ public class PlayerStats : CharacterStats
         damageBoost = 0;
         pointMultiplier = 1;
 
-        //Stamina and Health UI Values set. 
+        //Stamina, Shields, Health UI Values set. 
         currentStamina = maxBarValue;
+        currentShield = maxBarValue;
         staminaBar.value = maxBarValue;
         healthBar.value = maxBarValue;
         shieldBar.value = maxBarValue;
@@ -96,6 +122,13 @@ public class PlayerStats : CharacterStats
     public void UpdateStaminaBar() {
         staminaBar.value = currentStamina;
     }
+
+    //Updates the shield bar on the UI Canvas. 
+    public void UpdateShieldsBar()
+    {
+        shieldBar.value = currentShield;
+    }
+
 
     //This function has a formula which calculates how much should be added to staminaEndurance playerStats. 
     //This is because decay rate of player's stamina is 20points, hence the max cutoff should be at 20.
@@ -144,6 +177,24 @@ public class PlayerStats : CharacterStats
         return health;
     }
 
+    public override void TakeDamage(float damage) {
+        beingAttacked = true;
+    
+        if(currentShield > barMargin) {
+            currentShield -= (damage * damageTakenMultipler);
+            UpdateShieldsBar();
+            base.TakeDamage(damage/damageTakenMultipler);
+        }
+        
+        if(currentShield < barMargin) {
+            outOfShields = true;
+        }
+
+        if(outOfShields) {
+            base.TakeDamage(damage);
+        }
+    }
+
     IEnumerator FlashStaminaBar()
     {
         bool toggle = false;
@@ -158,4 +209,29 @@ public class PlayerStats : CharacterStats
         staminaBarFill.color = darkForestGreen; 
     }
 
+    private bool CheckIfBeingAttacked()
+    {
+        return FindObjectsOfType<ZombieController>().Any(z => z.isAttacking);
+    }
+
+    IEnumerator ReplenishShieldsAfterDelay() 
+    {
+        yield return new WaitForSeconds(shieldsreplenishTimer);
+
+        if (!beingAttacked)
+        {  
+            ReplenishShields();
+        }
+    }
+
+    private void ReplenishShields()
+    { 
+        currentShield += 15 * Time.deltaTime;
+        if (currentShield > maxBarValue - barMargin)
+        {
+            currentShield = maxBarValue;
+            outOfShields = false;
+        }
+        UpdateShieldsBar();
+    }
 }

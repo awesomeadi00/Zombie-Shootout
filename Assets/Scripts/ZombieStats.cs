@@ -27,7 +27,7 @@ public class ZombieStats : CharacterStats
 
     //This function is called in the Zombie controller, it takes the player's CharacterStats and deals damage to the player's health. 
     //This function will also take into the armour endurance on the player as well. 
-    public void dealDamage(CharacterStats statsToDamage) {
+    public void dealDamage(PlayerStats statsToDamage) {
         statsToDamage.TakeDamage(damage * (1 - playerStats.CalculateArmourEndurance()));         
     }
 

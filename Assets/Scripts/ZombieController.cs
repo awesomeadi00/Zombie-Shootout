@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
     [SerializeField] private float zombieSpeed;
+    [SerializeField] private float stoppingDistance = 2;
+    public bool isAttacking = false;
+    [SerializeField] private AudioClip[] zombieGrowls;
+
     private float[] zombieWalkingSpeeds = {1, 2, 3, 4};
     private float zombieIdleSpeed = 0;
-    [SerializeField] private float stoppingDistance = 2; 
     private float timeOfLastAttack = 0;
-    public bool isAttacking = false;
     private bool isIdle = true;
     private bool canMove = true;
 
@@ -18,8 +21,8 @@ public class ZombieController : MonoBehaviour
     private Animator zombieAnim;
     private ZombieStats zombieStats;
     private AudioSource zombieAudio;
-    [SerializeField] private AudioClip[] zombieGrowls;
     private bool hasGrowled = true;
+    private NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +32,14 @@ public class ZombieController : MonoBehaviour
         zombieRb = GetComponent<Rigidbody>();
         zombieStats = GetComponent<ZombieStats>();
         playerObject = GameObject.Find("Player");
+        agent = GetComponent<NavMeshAgent>();
         StartCoroutine(IdleStart());    //Initially waits for the zombie to become active. 
     }
 
     void Update()
     {
         //If the zombie is not idle anymore and is alive, then he can start moving. 
-        if(!isIdle && zombieStats.ZombieDeathStatus() == false) {
+        if(gameObject.activeInHierarchy && !isIdle && zombieStats.ZombieDeathStatus() == false) {
             MoveZombie();
         }
 
@@ -48,10 +52,16 @@ public class ZombieController : MonoBehaviour
         //If he can move and is not attacking, then he will move towards the player. 
         if(!isAttacking && canMove) {
             zombieSpeed = zombieWalkingSpeeds[Random.Range(0, zombieWalkingSpeeds.Length)];
-            zombieAnim.SetFloat("Speed_f", 0.6f);
-            Vector3 lookDirection = (playerObject.transform.position - transform.position).normalized;
-            transform.position = Vector3.MoveTowards(transform.position, playerObject.transform.position, zombieSpeed * Time.deltaTime);
-            transform.LookAt(playerObject.transform);
+            agent.speed = zombieSpeed;
+            
+            zombieAnim.SetFloat("Speed_f", 0.6f);            
+            agent.destination = playerObject.transform.position;
+
+            // Ensure the zombie looks towards the player without changing pitch
+            Vector3 direction = playerObject.transform.position - transform.position;
+            direction.y = 0; // Ignore any height differences between the zombie and the player
+            Quaternion lookRotation = Quaternion.LookRotation(direction); // Create a rotation based on the new direction vector
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10); // Smoothly rotate the zombie towards the player
         }
 
         //If the zombie is very close to the player, make him stop moving and attempt to attack the player. 
@@ -60,7 +70,7 @@ public class ZombieController : MonoBehaviour
             //If it has been 2 seconds once more, then the zombie will attack. 
             if(Time.time >= timeOfLastAttack + zombieStats.attackSpeed) {
                 timeOfLastAttack = Time.time;
-                CharacterStats playerStats = playerObject.GetComponent<CharacterStats>();
+                PlayerStats playerStats = playerObject.GetComponent<PlayerStats>();
                 AttackPlayer(playerStats);
             }
 
@@ -85,7 +95,7 @@ public class ZombieController : MonoBehaviour
     }   
 
     //This function will activate the attack trigger and also deal damage to the player's stats. 
-    private void AttackPlayer(CharacterStats statsToDamage) {
+    private void AttackPlayer(PlayerStats statsToDamage) {
         zombieSpeed = zombieIdleSpeed;
         zombieAnim.SetTrigger("Attack_t");
         isAttacking = true;
