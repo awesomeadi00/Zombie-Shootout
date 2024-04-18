@@ -68,9 +68,9 @@ public class ZombieStats : CharacterStats
 
         // Only enter here once. 
         if(deathGate) {
-            deathGate = false;
             //When the zombie dies, add the points to the player. 
-            playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier; 
+            playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier;
+            deathGate = false;
         }
 
         zombieAnim.SetBool("Death_b", true);
