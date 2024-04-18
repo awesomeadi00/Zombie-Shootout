@@ -31,14 +31,14 @@ public class DoorCollider : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(gameObject.tag == "House 1 Door") {
+        if(gameObject.tag == "House 1 Door" && other.gameObject.tag == "Player") {
             if (!player.house1Key)
             {
                 doorUnlockText.gameObject.SetActive(true);
             }
         }
 
-        if (gameObject.tag == "House 2 Door")
+        if (gameObject.tag == "House 2 Door" && other.gameObject.tag == "Player")
         {
             if (!player.house2Key)
             {
@@ -49,7 +49,7 @@ public class DoorCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (gameObject.tag == "House 1 Door")
+        if (gameObject.tag == "House 1 Door" && other.gameObject.tag == "Player")
         {
             if (!player.house1Key)
             {
@@ -57,7 +57,7 @@ public class DoorCollider : MonoBehaviour
             }
         }
 
-        if (gameObject.tag == "House 2 Door")
+        if (gameObject.tag == "House 2 Door" && other.gameObject.tag == "Player")
         {
             if (!player.house2Key)
             {

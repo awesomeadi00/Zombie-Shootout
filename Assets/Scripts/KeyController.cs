@@ -30,7 +30,7 @@ public class KeyController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (gameObject.tag == "House 1 Key" && !collected)
+        if (gameObject.tag == "House 1 Key" && other.gameObject.tag == "Player" && !collected)
         {
             pickupText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.C))
@@ -43,7 +43,7 @@ public class KeyController : MonoBehaviour
             }
         }
 
-        if (gameObject.tag == "House 2 Key" && !collected)
+        if (gameObject.tag == "House 2 Key" && other.gameObject.tag == "Player" && !collected)
         {
             pickupText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.C))
@@ -59,12 +59,12 @@ public class KeyController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (gameObject.tag == "House 1 Key")
+        if (gameObject.tag == "House 1 Key" && other.gameObject.tag == "Player")
         {
             pickupText.gameObject.SetActive(false);
         }
 
-        if (gameObject.tag == "House 2 Key")
+        if (gameObject.tag == "House 2 Key" && other.gameObject.tag == "Player")
         {
             pickupText.gameObject.SetActive(false);
         }
