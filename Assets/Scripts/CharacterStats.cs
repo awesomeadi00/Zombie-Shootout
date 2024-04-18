@@ -37,7 +37,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     //This function takes a value and sets it as the entities health
-    public void SetHealth(float healthValueToSet) {
+    public virtual void SetHealth(float healthValueToSet) {
         health = healthValueToSet;
         CheckHealth();
     }

@@ -35,9 +35,30 @@ public class ZombieStats : CharacterStats
         statsToDamage.TakeDamage(damage * (1 - playerStats.CalculateArmourEndurance()));         
     }
 
-    //A getter function to check whether the zombie is dead or not. 
-    public bool ZombieDeathStatus() {
-        return isDead;
+    public override void TakeDamage(float damage)
+    {
+        float healthAfterDamage = health - damage;
+        SetHealth(healthAfterDamage);
+    }
+
+    public override void SetHealth(float healthValueToSet)
+    {
+        health = healthValueToSet;
+        CheckHealth();
+    }
+
+    public override void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+
+        if (health >= maxHealth)
+        {
+            health = maxHealth;
+        }
     }
 
     //For a zombie, when their health goes to 0, we set the object as false from the scene and add the points to the player's overall points. 
@@ -56,11 +77,16 @@ public class ZombieStats : CharacterStats
         zombieAnim.SetTrigger("Death");
 
         StartCoroutine(WaitToDespawn());
+    }
 
+    //A getter function to check whether the zombie is dead or not. 
+    public bool ZombieDeathStatus()
+    {
+        return isDead;
     }
 
     IEnumerator WaitToDespawn() {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         gameObject.SetActive(false);
     }
 

@@ -159,7 +159,7 @@ public class PlayerStats : CharacterStats
     }
 
     //This function will damage the zombie depending on the gun damage.  
-    public void DamageZombie(CharacterStats statsToDamage) {
+    public void DamageZombie(ZombieStats statsToDamage) {
         float overallDamage = inflictingDamage + damageBoost;
         statsToDamage.TakeDamage(overallDamage);
     }

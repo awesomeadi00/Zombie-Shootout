@@ -118,29 +118,7 @@ public class ZombieSpawnManager : MonoBehaviour
             }
         }
     }
-
-    //This function generates a random spawn position within the colliders and gets the relative y position of the terrain based on the x and z coordinates.
-    // private Vector3 GenerateSpawnPosition() {
-    //     RaycastHit hit;
-    //     float spawnPosX = Random.Range(transform.position.x - xRange, transform.position.x + xRange);
-    //     float spawnPosZ = Random.Range(transform.position.z - zRange, transform.position.z + zRange);
-
-    //     //Shoot a ray down from this coordinate (spawn point). 
-    //     Ray ray = new Ray(new Vector3(spawnPosX, rayOriginHeight, spawnPosZ), Vector3.down); 
-
-    //     //If the ray hits a collider, then it will return the y coordinate of that collider which would be the terrain height. 
-    //     if(Physics.Raycast(ray, out hit)) {
-    //         terrainHeightY = hit.point.y;
-    //     }
-
-    //     //If it doesn't hit a collider, then by default let the terrain height spawn point be 25 as that is the highest point for a zombie to spawn on the terrain.
-    //     else {
-    //         terrainHeightY = rayOriginHeight;
-    //     }
-
-    //     Vector3 randomPos = new Vector3(spawnPosX, terrainHeightY, spawnPosZ);
-    //     return randomPos;
-    // }
+    
     private Vector3 GenerateSpawnPosition()
     {
         float spawnPosX = Random.Range(transform.position.x - xRange, transform.position.x + xRange);

@@ -7,8 +7,7 @@ public class WeaponShooting : MonoBehaviour
 
     private Camera mainCam;
     [SerializeField] private GameObject Zombie;
-    private CharacterStats zombieStats;
-    private ZombieStats blood;
+    private ZombieStats zombieStats;
 
     private bool reloadingCompleted = true;
     private PlayerStats playerStats;
@@ -75,9 +74,8 @@ public class WeaponShooting : MonoBehaviour
         //If it hits a zombie, call the damage zombie function in Player Stats and pass that specific zombie's characterstats
         if(Physics.Raycast(ray, out hit, weaponRange)) {
             if(hit.transform.CompareTag("Zombie")) {
-                zombieStats = hit.transform.GetComponent<CharacterStats>();
-                blood = hit.transform.GetComponent<ZombieStats>();
-                blood.SpillBlood();
+                zombieStats = hit.transform.GetComponent<ZombieStats>();
+                zombieStats.SpillBlood();
                 playerStats.DamageZombie(zombieStats);
             }
         }
