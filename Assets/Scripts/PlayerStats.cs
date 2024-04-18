@@ -97,9 +97,9 @@ public class PlayerStats : CharacterStats
         shieldBar.value = maxBarValue;
 
         //Ammo values set: 
-        ammoMagazineSize = 40; 
+        ammoMagazineSize = 120; 
         currentAmmoinMagazine = ammoMagazineSize;
-        storedAmmo = 160;
+        storedAmmo = 500;
         hasAmmoinMagazine = true;
     }
 
