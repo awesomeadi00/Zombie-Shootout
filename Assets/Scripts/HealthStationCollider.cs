@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 
 //This script will go on the Health Collider Objects
+[RequireComponent(typeof(AudioSource))]
 public class HealthStationCollider : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI colliderTextPopUp;         
@@ -16,12 +17,13 @@ public class HealthStationCollider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthFullText;
     private int healthStationPoints = 20;
     [SerializeField] private AudioClip collectSound;
-    private AudioSource playerAudio;
+    private AudioSource stationAudio;
+    private bool isCooldownActive = false;
 
     //Start is called before the first frame update
     void Start() {
-        InitializeStationGameObjects(); 
-        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();   
+        InitializeStationGameObjects();
+        stationAudio = GetComponent<AudioSource>();   
     }
 
     private void InitializeStationGameObjects() {
@@ -45,7 +47,7 @@ public class HealthStationCollider : MonoBehaviour
                 else {
                     colliderTextPopUp.gameObject.SetActive(true);
                     if(Input.GetKeyDown(KeyCode.C)) {
-                        playerAudio.PlayOneShot(collectSound, 1.0f);
+                        stationAudio.PlayOneShot(collectSound, 1.0f);
                         colliderTextPopUp.gameObject.SetActive(false);
                         playerStats.Heal(healthStationPoints);
                         itemPerk.gameObject.SetActive(false);
@@ -72,9 +74,21 @@ public class HealthStationCollider : MonoBehaviour
     }
 
     //This function is used when the player gets the item and then has to wait for a minute or two to receive it once more. 
-    private IEnumerator WaitTillSpawnsBack() {
-        yield return new WaitForSeconds(120);
+    private IEnumerator WaitTillSpawnsBack()
+    {
+        isCooldownActive = true; 
+        float cooldownTime = 60; 
+
+        while (cooldownTime > 0)
+        {
+            notAvailableText.text = "Available in: " + Mathf.CeilToInt(cooldownTime) + "s";
+            yield return new WaitForSeconds(1);
+            cooldownTime--;
+        }
+
         isAvailable = true;
         itemPerk.gameObject.SetActive(true);
+        notAvailableText.gameObject.SetActive(false);
+        isCooldownActive = false; 
     }
 }

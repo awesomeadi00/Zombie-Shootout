@@ -8,6 +8,7 @@ public class PerkStationCollider :  MonoBehaviour
     //Perk Station UI Variables: 
     [SerializeField] private TextMeshProUGUI colliderTextPopUp; 
     [SerializeField] private TextMeshProUGUI notEnoughPointsText;
+    [SerializeField] private TextMeshProUGUI pointsNeededText;
     [SerializeField] private TextMeshProUGUI armourValueText; 
     [SerializeField] private TextMeshProUGUI staminaValueText; 
     [SerializeField] private TextMeshProUGUI damageValueText; 
@@ -16,10 +17,10 @@ public class PerkStationCollider :  MonoBehaviour
     //Perk Station Values:
     private PlayerStats playerStats;
     private int pointsNeeded;
-    private int armourPoints = 1500;
-    private int staminaPoints = 2000;
-    private int damagePoints = 4000;
-    private int pointMultPoints = 3000;
+    public int armourPoints = 1000;
+    public int staminaPoints = 1500;
+    public int damagePoints = 2000;
+    public int pointMultPoints = 2500;
     [SerializeField] private AudioClip collectSound;
     private AudioSource playerAudio;
 
@@ -52,6 +53,8 @@ public class PerkStationCollider :  MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        UpdatePointsNeededText();
+
         if(other.gameObject.CompareTag("Player")) {
             //If the player has enough points to purchase the perk then print it out
             if(playerStats.playerPoints >= pointsNeeded) {
@@ -85,6 +88,7 @@ public class PerkStationCollider :  MonoBehaviour
             else {
                 colliderTextPopUp.gameObject.SetActive(false);
                 notEnoughPointsText.gameObject.SetActive(true);
+                pointsNeededText.gameObject.SetActive(true);
             }
         }
     }
@@ -94,6 +98,28 @@ public class PerkStationCollider :  MonoBehaviour
         if(other.gameObject.CompareTag("Player")) {
             colliderTextPopUp.gameObject.SetActive(false);
             notEnoughPointsText.gameObject.SetActive(false);
+            pointsNeededText.gameObject.SetActive(false);
         }
+    }
+
+    private void UpdatePointsNeededText()
+    {
+        string pointsText = "";
+        switch (gameObject.tag)
+        {
+            case "Armour Collider":
+                pointsText = $"Need: {armourPoints} Points";
+                break;
+            case "Stamina Collider":
+                pointsText = $"Need: {staminaPoints} Points";
+                break;
+            case "Damage Collider":
+                pointsText = $"Need: {damagePoints} Points";
+                break;
+            case "Point Collider":
+                pointsText = $"Need: {pointMultPoints} Points";
+                break;
+        }
+        pointsNeededText.text = pointsText;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class AmmoStationCollider : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI colliderTextPopUp;         
@@ -15,12 +16,13 @@ public class AmmoStationCollider : MonoBehaviour
     private int ammoOnLoad;
     private int ammoBackUp;
     [SerializeField] private AudioClip collectSound;
-    private AudioSource playerAudio;
+    private AudioSource stationAudio;
+    private bool isCooldownActive = false;
 
     //Start is called before the first frame update
     void Start() {
         InitializeStationGameObjects();
-        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();   
+        stationAudio = GetComponent<AudioSource>();   
     }
 
     public virtual void InitializeStationGameObjects() {
@@ -38,7 +40,7 @@ public class AmmoStationCollider : MonoBehaviour
                 colliderTextPopUp.gameObject.SetActive(true);
                 //If pressed 'c', it will restock ammo into the player's stored ammo section. 
                 if(Input.GetKeyDown(KeyCode.C)) {
-                    playerAudio.PlayOneShot(collectSound, 1.0f);
+                    stationAudio.PlayOneShot(collectSound, 1.0f);
                     colliderTextPopUp.gameObject.SetActive(false);
                     RestockAmmo();
                     itemPerk.gameObject.SetActive(false);
@@ -63,10 +65,22 @@ public class AmmoStationCollider : MonoBehaviour
     }
 
     //This function is used when the player gets the item and then has to wait for a minute or two to receive it once more. 
-    private IEnumerator WaitTillSpawnsBack() {
-        yield return new WaitForSeconds(120);
+    private IEnumerator WaitTillSpawnsBack()
+    {
+        isCooldownActive = true;
+        float cooldownTime = 60;
+
+        while (cooldownTime > 0)
+        {
+            notAvailableText.text = "Available in: " + Mathf.CeilToInt(cooldownTime) + "s";
+            yield return new WaitForSeconds(1);
+            cooldownTime--;
+        }
+
         isAvailable = true;
         itemPerk.gameObject.SetActive(true);
+        notAvailableText.gameObject.SetActive(false);
+        isCooldownActive = false;
     }
 
     private void RestockAmmo() {
