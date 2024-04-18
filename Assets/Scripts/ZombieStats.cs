@@ -10,12 +10,19 @@ public class ZombieStats : CharacterStats
     [SerializeField] public float damage;         //1) Zombie has a damage value that they inflict on the player. 
     public float attackSpeed;                     //2) Zombie has a speed at which they attack the player. 
     public float zombiePointPerKill;              //3) Zombie has a point value that the player receives when they kill them.
-    private bool deathGate = true;
+    public bool deathGate;
 
     private void Start() {
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         zombieAnim = GetComponent<Animator>();
         InitializeVariables();
+        deathGate = true;
+    }
+
+    private void Update() {
+        if(!ZombieDeathStatus()) {
+            deathGate = true;
+        }
     }
 
     //Zombies start off with 50hp, has 50points, and deal 2dmg every 2 seconds. 
@@ -65,9 +72,9 @@ public class ZombieStats : CharacterStats
     public override void Die()
     {
         base.Die();
-
+        
         // Only enter here once. 
-        if(deathGate) {
+        if (deathGate) {
             //When the zombie dies, add the points to the player. 
             playerStats.playerPoints += zombiePointPerKill * playerStats.pointMultiplier;
             deathGate = false;
