@@ -12182,6 +12182,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 125392901}
     - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: pistolDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
       propertyPath: staminaBarFill
       value: 
       objectReference: {fileID: 1724958056}
