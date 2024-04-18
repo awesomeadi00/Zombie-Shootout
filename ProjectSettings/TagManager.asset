@@ -15,6 +15,10 @@ TagManager:
   - Point Collider
   - Fire
   - Structure
+  - House 1 Key
+  - House 2 Key
+  - House 1 Door
+  - House 2 Door
   layers:
   - Default
   - TransparentFX

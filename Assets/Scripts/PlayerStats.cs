@@ -49,6 +49,8 @@ public class PlayerStats : CharacterStats
     public bool outOfStamina = false;
     public bool outOfShields = false;
     public bool hasAmmoinMagazine;
+    public bool house1Key = false;
+    public bool house2Key = false;
 
     void Start() {
         zombieStats = zombiePrefab.gameObject.GetComponent<ZombieStats>();
