@@ -25,7 +25,6 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private Slider volSlider;
     [SerializeField] private Slider pageSlider;
-    [SerializeField] private Slider mouseSlider;
     [SerializeField] private GameObject[] instructionPages;
 
     //Variable to check which screen the user is on, 0 = title screen, 1 = instruction screen
@@ -38,7 +37,6 @@ public class MenuUIHandler : MonoBehaviour
 
     void Update() {
         MainManager.Instance.volumeValue = volSlider.value;
-        MainManager.Instance.mouseSensValue = mouseSlider.value;
     }
 
     //This function will be called to start the Main Scene

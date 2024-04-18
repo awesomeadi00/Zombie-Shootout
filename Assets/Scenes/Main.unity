@@ -12178,6 +12178,30 @@ PrefabInstance:
       propertyPath: damageTakenMultipler
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c48a2cb005c3740479e41b9df734b2ad, type: 3}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 95fd0f6e4593b4e09b3d513839039d96, type: 3}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6148a3565030f4ad4bf1d52a57fc3c7f, type: 3}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 07f1ca4d96bca46dbbaa5f4483f7a48a, type: 3}
+    - target: {fileID: 3380768977026333244, guid: 833f843a391214b399fced46670bdf94, type: 3}
+      propertyPath: hurtSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 430a890fb607d471db897c36240711fa, type: 3}
     - target: {fileID: 7607936617215612343, guid: 833f843a391214b399fced46670bdf94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.479

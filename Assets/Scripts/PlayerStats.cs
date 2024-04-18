@@ -43,6 +43,8 @@ public class PlayerStats : CharacterStats
     public float shieldsreplenishTimer = 3f;
     public float rifleDamage = 3f;
     public float pistolDamage = 7;
+    public AudioClip[] hurtSounds;
+    private AudioSource playerAudio;
 
     [Header("Player Booleans")]
     public bool beingAttacked = false;
@@ -55,6 +57,7 @@ public class PlayerStats : CharacterStats
     void Start() {
         zombieStats = zombiePrefab.gameObject.GetComponent<ZombieStats>();
         weaponSelected = GetComponent<WeaponShooting>();
+        playerAudio = GetComponent<AudioSource>();
         InitializeVariables();
     }  
 
@@ -196,8 +199,14 @@ public class PlayerStats : CharacterStats
 
     public override void TakeDamage(float damage) {
         beingAttacked = true;
-    
-        if(currentShield > barMargin) {
+
+        if (hurtSounds.Length > 0)
+        {
+            int index = Random.Range(0, hurtSounds.Length);
+            playerAudio.PlayOneShot(hurtSounds[index], 5f);
+        }
+
+        if (currentShield > barMargin) {
             currentShield -= (damage * damageTakenMultipler);
             UpdateShieldsBar();
             base.TakeDamage(damage/damageTakenMultipler);
