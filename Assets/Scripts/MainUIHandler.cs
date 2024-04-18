@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class MainUIHandler : MonoBehaviour
 {
-    [SerializeField] private Button menuButton; 
     [SerializeField] private GameObject pausedScreen;
     [SerializeField] private GameObject gameOverScreen;
     private PlayerStats playerStats;
@@ -26,7 +25,11 @@ public class MainUIHandler : MonoBehaviour
             PauseGame();
         }
 
-        if(playerStats.DeathStatus()) {
+        if (paused && Input.GetKeyDown(KeyCode.Return)) {
+            ReturnToMenu();
+        }
+
+        if (playerStats.DeathStatus()) {
             ViewGameOverScreen();
         }
     }
@@ -40,7 +43,6 @@ public class MainUIHandler : MonoBehaviour
 
             paused = true;
             pausedScreen.SetActive(true);
-            menuButton.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
 
@@ -51,7 +53,6 @@ public class MainUIHandler : MonoBehaviour
 
             paused = false;
             pausedScreen.SetActive(false);
-            menuButton.gameObject.SetActive(false);
             Time.timeScale = 1;
         }
     }
